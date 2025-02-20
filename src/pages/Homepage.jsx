@@ -1,5 +1,14 @@
-import React from "react";
+import { useSelector } from "react-redux";
 
 export const Homepage = () => {
-  return <div>Homepage</div>;
+  const state = useSelector((state) => state);
+  const foo = () => {
+    console.log(state);
+  };
+  return (
+    <div>
+      Homepage
+      <button onClick={foo}>Click me</button>
+    </div>
+  );
 };
