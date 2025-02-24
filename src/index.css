@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+* {
+  transition: all 0.2s ease-in;
+  box-sizing: border-box;
+}
+
+.dev-border {
+  border: 1px solid red;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 2px;
+  height: 2px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #afafaf;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #adadad;
+}
