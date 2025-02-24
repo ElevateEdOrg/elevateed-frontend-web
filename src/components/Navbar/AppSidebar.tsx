@@ -11,7 +11,10 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from "@/components/ui/sidebar";
+import { AuthStates } from "@/types";
+import { Dispatch, SetStateAction } from "react";
 
 // Menu items.
 const items = [
@@ -30,19 +33,14 @@ const items = [
     url: "#",
     icon: IoMdCart,
   },
-  {
-    title: "Login",
-    url: "#",
-    icon: RiLoginCircleFill,
-  },
-  {
-    title: "Sign up",
-    url: "#",
-    icon: LiaSignInAltSolid,
-  },
 ];
+interface AppSidebarProps {
+  authType: AuthStates | null;
+  setAuthType: Dispatch<SetStateAction<AuthStates | null>>;
+}
 
-export function AppSidebar() {
+export const AppSidebar: React.FC<AppSidebarProps> = ({ setAuthType }) => {
+  const { openMobile, setOpenMobile } = useSidebar();
   return (
     <Sidebar collapsible="icon">
       <SidebarContent>
@@ -64,10 +62,38 @@ export function AppSidebar() {
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
+              {/* Login Button */}
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <button
+                    onClick={() => {
+                      setAuthType("login");
+                      setOpenMobile(false);
+                    }}
+                  >
+                    <RiLoginCircleFill />
+                    <span>Login</span>
+                  </button>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              {/* Register button */}
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <button
+                    onClick={() => {
+                      setAuthType("register");
+                      setOpenMobile(false);
+                    }}
+                  >
+                    <LiaSignInAltSolid />
+                    <span>Sign up</span>
+                  </button>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
     </Sidebar>
   );
-}
+};

@@ -37,8 +37,8 @@ export const Homepage: React.FC = () => {
   };
 
   return (
-    <main>
-      <div className="flex gap-10">
+    <section className="max-h-screen">
+      <div className="flex flex-col gap-10">
         Homepage
         <Button className="" onClick={foo}>
           Click me
@@ -60,6 +60,6 @@ export const Homepage: React.FC = () => {
         />
         <button>Send Message to Modi</button>
       </div>
-    </main>
+    </section>
   );
 };

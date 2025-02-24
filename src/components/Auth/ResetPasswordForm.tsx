@@ -2,7 +2,7 @@ import { AuthStates } from "@/types";
 import React, { useState } from "react";
 
 interface ResetPasswordFormProps {
-  authType: AuthStates;
+  authType: AuthStates | null;
 }
 
 export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
@@ -32,27 +32,29 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
 
   return (
     <div
-      className={`absolute w-1/2 h-full px-20 py-16 ${
+      className={`absolute w-full h-1/2 lg:w-1/2 lg:h-full px-10 2xl:px-20 py-8 md:py-10 lg:py-16 transition-all duration-300 ${
         authType === "reset"
-          ? "opacity-100 left-1/2"
-          : "opacity-0 left-[10000px]"
+          ? "opacity-100 lg:left-1/2 top-1/2  lg:top-0"
+          : "opacity-0 lg:left-[10000px] top-[10000px]"
       }`}
     >
-      <h2 className="text-4xl font-black font-sans">Reset Password</h2>
-      <form className="flex flex-col mt-20" onSubmit={handleSubmit}>
+      <h2 className="text-xl md:text-2xl 2xl:text-4xl font-black font-sans">
+        Reset Password
+      </h2>
+      <form className="flex flex-col mt-10 2xl:mt-20" onSubmit={handleSubmit}>
         <input
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Enter your email"
-          className="my-4 bg-white rounded-full shadow-xl px-4 py-3 focus-within:outline-none"
+          className="my-4 bg-white rounded-full shadow-xl  text-xs md:text-base px-4 py-3 focus-within:outline-none"
           required
         />
         <button
           type="submit"
-          className="w-full bg-blue-600 rounded-full text-white py-3 cursor-pointer hover:bg-blue-800 my-4"
+          className="w-full bg-blue-600 rounded-full text-white py-3  text-xs md:text-base cursor-pointer hover:bg-blue-800 my-4"
         >
-          Send link to your mail
+          Send OTP to your mail
         </button>
       </form>
     </div>
