@@ -19,7 +19,7 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
         value={value}
         onChange={onChange}
         placeholder="Enter your password"
-        className="my-4 w-full bg-white rounded-full shadow-xl px-4 py-3 focus-within:outline-none"
+        className="w-full bg-white rounded-full shadow-xl  text-xs md:text-base px-4 py-2 md:py-3 focus-within:outline-none"
       />
       {!showPassword ? (
         <FaEyeSlash

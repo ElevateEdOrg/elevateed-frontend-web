@@ -3,8 +3,16 @@ import { Link } from "react-router";
 import { CiSearch } from "react-icons/ci";
 import { SidebarTrigger } from "../ui/sidebar";
 import { IoMdCart } from "react-icons/io";
+import { AuthStates } from "@/types";
+import { AuthModals } from "../Auth/AuthModals";
 
-export const Header: React.FC = () => {
+interface HeaderProps {
+  authType: AuthStates | null;
+  setAuthType: React.Dispatch<React.SetStateAction<AuthStates | null>>;
+}
+
+export const Header: React.FC<HeaderProps> = ({ authType, setAuthType }) => {
+  // const [authType, setAuthType] = useState<AuthStates | null>(null);
   return (
     <nav className="fixed w-screen h-20 z-50 bg-white flex justify-between items-center px-4 md:px-14 xl:px-32 gap-3 md:gap-5 lg:gap-24 border-b">
       <Link to="/" className="flex items-center  h-full  w-24 md:w-32 xl:w-40">
@@ -30,18 +38,18 @@ export const Header: React.FC = () => {
         >
           <IoMdCart />
         </Link>
-        <Link
-          className="border-2 border-primary px-4 py-1 font-semibold rounded-2xl text-xs md:text-base"
-          to="#"
+        <button
+          onClick={() => setAuthType("login")}
+          className="border-2 border-primary px-4 py-1 font-semibold rounded-2xl text-xs md:text-base cursor-pointer"
         >
           Login
-        </Link>
-        <Link
+        </button>
+        <button
+          onClick={() => setAuthType("register")}
           className="border-2 border-transparent hover:border-cyan-950 bg-cyan-600 px-4 py-1 font-semibold rounded-2xl text-white text-xs md:text-base"
-          to="#"
         >
           Sign up
-        </Link>
+        </button>
       </div>
     </nav>
   );
