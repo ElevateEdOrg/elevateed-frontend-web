@@ -3,6 +3,7 @@ import { login } from "@/redux/slices/userSlice";
 import { StartChatButton } from "@/components";
 import React from "react";
 import { RootState } from "@/redux/store";
+import { Button } from "@/components/ui/button";
 
 export const Homepage: React.FC = () => {
   const state = useSelector((state: RootState) => state);
@@ -39,9 +40,9 @@ export const Homepage: React.FC = () => {
     <main>
       <div className="flex gap-10">
         Homepage
-        <button className="" onClick={foo}>
+        <Button className="" onClick={foo}>
           Click me
-        </button>
+        </Button>
         <button onClick={addStudentUserToState} className=" py-4">
           User state: Student
         </button>
