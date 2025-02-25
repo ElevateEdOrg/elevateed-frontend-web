@@ -40,7 +40,7 @@ export const Homepage: React.FC = () => {
     <section className="max-h-screen">
       <div className="flex flex-col gap-10">
         Homepage
-        <Button className="" onClick={foo}>
+        <Button className="bg-brand-primary" onClick={foo}>
           Click me
         </Button>
         <button onClick={addStudentUserToState} className=" py-4">
