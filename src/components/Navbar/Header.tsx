@@ -46,7 +46,7 @@ export const Header: React.FC<HeaderProps> = ({ authType, setAuthType }) => {
         </button>
         <button
           onClick={() => setAuthType("register")}
-          className="border-2 border-transparent hover:border-cyan-950 bg-cyan-600 px-4 py-1 font-semibold rounded-2xl text-white text-xs md:text-base"
+          className="border-2 border-transparent hover:border-black-90 bg-brand-primary px-4 py-1 font-semibold rounded-2xl text-white text-xs md:text-base"
         >
           Sign up
         </button>

@@ -1,6 +1,7 @@
 import { AuthStates } from "@/types";
 import { PasswordInput } from "./PasswordInput";
 import { Dispatch, SetStateAction, useState } from "react";
+import { stringify } from "querystring";
 
 interface LoginFormProps {
   authType: AuthStates | null;
@@ -16,22 +17,35 @@ export const LoginForm: React.FC<LoginFormProps> = ({
     password: "",
   };
   const [formData, setFormData] = useState(initialState);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Form submitted", formData);
-    const res = await fetch("http://192.168.10.111:8001/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
-    const data = await res.json();
-    console.log(data);
+    setLoading(true);
+    try {
+      const res = await fetch("http://192.168.10.111:8001/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      console.log("res", res);
+      if (res.status !== 200) {
+        setError("Failed to login");
+        throw new Error("Failed to login");
+      }
+      const data = await res.json();
+      console.log(data);
+    } catch (error) {
+      console.error("Error logging in:", error);
+    } finally {
+      setLoading(false);
+    }
   };
   return (
     <div
@@ -49,9 +63,14 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         Login
       </h2>
       <form
-        className="flex flex-col md:mt-10 2xl:mt-20"
+        className="flex flex-col md:mt-10 2xl:mt-20 relative"
         onSubmit={handleSubmit}
       >
+        {error && (
+          <p className="text-red-400  w-full text-sm absolute top-full left-1/2 -translate-x-1/2">
+            {error}
+          </p>
+        )}
         <input
           type="email"
           name="email"
@@ -64,9 +83,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         <button
           type="submit"
           // onClick={handleSubmit}
+          disabled={loading}
           className="w-full bg-blue-600 rounded-full text-white py-3  text-xs md:text-base cursor-pointer hover:bg-blue-800 my-4"
         >
-          Submit
+          {loading ? "Loading" : "Submit"}
         </button>
         <p className="text-sm">
           Forgot your password?{" "}

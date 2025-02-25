@@ -14,7 +14,7 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
     e.preventDefault();
     try {
       const res = await fetch(
-        "http://192.168.10.111:8001/auth/password-reset",
+        "http://192.168.10.111:8001/auth/forgot-password",
         {
           method: "POST",
           headers: {
