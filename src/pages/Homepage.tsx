@@ -1,13 +1,20 @@
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "@/redux/slices/userSlice";
-import { HeroBanner, StartChatButton } from "@/components";
+import {
+  BrowseCourses,
+  CourseCard,
+  HeroBanner,
+  StartChatButton,
+} from "@/components";
 import React from "react";
 import { RootState } from "@/redux/store";
 import { Button } from "@/components/ui/button";
+import { dummyCourse } from "@/../db";
 
 export const Homepage: React.FC = () => {
   const state = useSelector((state: RootState) => state);
   const dispatch = useDispatch();
+
   const foo = () => {
     console.log(state);
   };
@@ -37,11 +44,16 @@ export const Homepage: React.FC = () => {
   };
 
   return (
-    <section className="max-h-screen w-screen pt-24 px-4 xl:px-32">
-      <div className="flex flex-col items-center w-full h-[50vh]">
+    <section className="max-h-screen w-screen pt-24 px-4 xl:px-32 overflow-x-hidden">
+      <article className="flex flex-col items-center w-full pb-10 ">
         <HeroBanner />
-      </div>
-      {/* <div className="debug w-fit">Hello</div> */}
+      </article>
+      <article className="py-4">
+        <h2 className="text-2xl font-bold border-b pb-4 ">Continue Watching</h2>
+        <CourseCard course={dummyCourse} className="pt-4" />
+      </article>
+      <BrowseCourses />
+      {/* Testing */}
       <div className="flex flex-col gap-10">
         Homepage
         <Button className="bg-brand-primary" onClick={foo}>

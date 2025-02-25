@@ -85,4 +85,8 @@ body {
   .debug {
     border: 1px solid red;
   }
+  .scrollbar-hidden {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
 }

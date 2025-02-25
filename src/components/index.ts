@@ -7,3 +7,5 @@ export * from "./Auth/PasswordInput";
 export * from "./Auth/AuthSider";
 export * from "./Navbar/Navbar";
 export * from "./Carousel/HeroBanner";
+export * from "./Course/CourseCard";
+export * from "./Course/BrowseCourses";
