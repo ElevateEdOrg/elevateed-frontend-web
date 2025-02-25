@@ -43,7 +43,7 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({ setAuthType }) => {
   const { openMobile, setOpenMobile } = useSidebar();
   return (
     <Sidebar collapsible="icon">
-      <SidebarContent>
+      <SidebarContent className="bg-white">
         <SidebarGroup className="flex flex-col gap-20">
           <SidebarGroupLabel>
             <div className="w-full mt-10">

@@ -6,3 +6,4 @@ export * from "./Auth/ResetPasswordForm";
 export * from "./Auth/PasswordInput";
 export * from "./Auth/AuthSider";
 export * from "./Navbar/Navbar";
+export * from "./Carousel/HeroBanner";

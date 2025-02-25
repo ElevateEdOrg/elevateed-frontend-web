@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "@/redux/slices/userSlice";
-import { StartChatButton } from "@/components";
+import { HeroBanner, StartChatButton } from "@/components";
 import React from "react";
 import { RootState } from "@/redux/store";
 import { Button } from "@/components/ui/button";
@@ -37,7 +37,10 @@ export const Homepage: React.FC = () => {
   };
 
   return (
-    <section className="max-h-screen">
+    <section className="max-h-screen w-screen pt-24 px-32">
+      <div className="flex flex-col items-center w-full h-[50vh]">
+        <HeroBanner />
+      </div>
       <div className="flex flex-col gap-10">
         Homepage
         <Button className="bg-brand-primary" onClick={foo}>

@@ -11,7 +11,7 @@
 body {
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 /* Scrollbar Styles */
@@ -74,4 +74,10 @@ body {
   --color-error: var(--error);
   --color-warning: var(--warning);
   --color-success: var(--success);
+}
+
+@layer base {
+  .debug {
+    border: 1px solid red;
+  }
 }
