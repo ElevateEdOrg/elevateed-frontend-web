@@ -76,6 +76,11 @@ body {
   --color-success: var(--success);
 }
 
+/* Custom breakpoint */
+@theme {
+  --breakpoint-xs: 30rem;
+}
+
 @layer base {
   .debug {
     border: 1px solid red;
