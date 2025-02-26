@@ -4,6 +4,7 @@ import {
   BrowseCourses,
   CourseCard,
   HeroBanner,
+  PopularInstructors,
   RecommendedCourses,
   StartChatButton,
 } from "@/components";
@@ -45,7 +46,7 @@ export const Homepage: React.FC = () => {
   };
 
   return (
-    <section className="max-h-screen w-screen pt-24 px-4 xl:px-32 overflow-x-hidden">
+    <section className="w-screen pt-24 px-4 xl:px-32 overflow-x-hidden">
       <article className="flex flex-col items-center w-full pb-10 ">
         <HeroBanner />
       </article>
@@ -55,6 +56,7 @@ export const Homepage: React.FC = () => {
       </article>
       <BrowseCourses />
       <RecommendedCourses />
+      <PopularInstructors />
     </section>
     // <div className="flex flex-col gap-10">
     //   Homepage

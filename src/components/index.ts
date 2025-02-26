@@ -10,3 +10,5 @@ export * from "./Carousel/HeroBanner";
 export * from "./Course/CourseCard";
 export * from "./Course/BrowseCourses";
 export * from "./Course/RecommendedCourses";
+export * from "./Instructor/PopularInstructors";
+export * from "./Footer/Footer";
