@@ -1,7 +1,10 @@
 import { AuthStates } from "@/types";
 import { PasswordInput } from "./PasswordInput";
 import { Dispatch, SetStateAction, useState } from "react";
-import { stringify } from "querystring";
+import { useDispatch } from "react-redux";
+import { login } from "@/redux/slices/userSlice";
+import { AuthUserResponse, loginUser } from "@/api/authService";
+import { AxiosError } from "axios";
 
 interface LoginFormProps {
   authType: AuthStates | null;
@@ -19,6 +22,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   const [formData, setFormData] = useState(initialState);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const dispatch = useDispatch();
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -27,24 +32,33 @@ export const LoginForm: React.FC<LoginFormProps> = ({
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await fetch("http://192.168.10.111:8001/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const res: AuthUserResponse = await loginUser(
+        formData.email,
+        formData.password
+      );
       console.log("res", res);
       if (res.status !== 200) {
-        setError("Failed to login");
-        throw new Error("Failed to login");
+        // setError(res.statusText);
+        throw new Error(res.data.message);
       }
-      const data = await res.json();
-      console.log(data);
+      const data = res.data;
+      const user = data.user;
+      dispatch(login(user));
     } catch (error) {
-      console.error("Error logging in:", error);
+      const errorMessage =
+        (error as AxiosError<{ message: string }>)?.response?.data?.message ||
+        "Something went wrong!";
+      setError(errorMessage);
     } finally {
       setLoading(false);
+      if (error) {
+        setTimeout(() => {
+          setError(null);
+        }, 3000);
+      } else {
+        setFormData(initialState);
+        setAuthType(null);
+      }
     }
   };
   return (

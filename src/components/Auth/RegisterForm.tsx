@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { PasswordInput } from "./PasswordInput";
 import { AuthStates } from "@/types";
+import { AuthUserResponse, registerUser } from "@/api/authService";
+import { AxiosError } from "axios";
+import { useDispatch } from "react-redux";
+import { login } from "@/redux/slices/userSlice";
 
 interface RegisterFormProps {
   authType: AuthStates | null;
@@ -20,6 +24,9 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ authType }) => {
     role: "student",
     password: "",
   });
+  const [error, setError] = useState<string | null>(null);
+
+  const dispatch = useDispatch();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -32,18 +39,22 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ authType }) => {
     console.log(formData);
 
     try {
-      const res = await fetch("http://192.168.10.111:8001/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await res.json();
-      console.log(data);
+      const res: AuthUserResponse = await registerUser(
+        formData.full_name,
+        formData.email,
+        formData.role,
+        formData.password
+      );
+      if (res.status !== 200) {
+        throw new Error(res.data.message);
+      }
+      console.log("res", res);
+      dispatch(login(res.data.user));
     } catch (error) {
-      console.error("Error registering:", error);
+      const errorMessage =
+        (error as AxiosError<{ message: string }>)?.response?.data?.message ||
+        "Something went wrong!";
+      setError(errorMessage);
     }
   };
 
