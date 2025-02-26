@@ -11,8 +11,8 @@ export const OpenChatWidget = () => {
   return (
     <div
       className={
-        `fixed right-10 transition-all duration-300 z-40 bg-slate-900 cursor-pointer p-4 rounded-full shadow-xl shadow-gray-950 ` +
-        (isWidgetOpen ? "-bottom-[1000px]" : "bottom-10")
+        `fixed right-4 lg:right-10 transition-all duration-300 z-40  bg-slate-900 cursor-pointer p-4 rounded-full shadow-xl shadow-gray-950 ` +
+        (isWidgetOpen ? "-bottom-[1000px]" : "lg:bottom-10 bottom-4")
       }
       onClick={() => dispatch(setIsWidgetOpen(true))}
     >
