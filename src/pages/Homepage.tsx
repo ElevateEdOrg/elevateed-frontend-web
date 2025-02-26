@@ -4,6 +4,7 @@ import {
   BrowseCourses,
   CourseCard,
   HeroBanner,
+  RecommendedCourses,
   StartChatButton,
 } from "@/components";
 import React from "react";
@@ -53,29 +54,29 @@ export const Homepage: React.FC = () => {
         <CourseCard course={dummyCourse} className="pt-4" />
       </article>
       <BrowseCourses />
-      {/* Testing */}
-      <div className="flex flex-col gap-10">
-        Homepage
-        <Button className="bg-brand-primary" onClick={foo}>
-          Click me
-        </Button>
-        <button onClick={addStudentUserToState} className=" py-4">
-          User state: Student
-        </button>
-        <button onClick={addInstructorUserToState} className=" py-4">
-          User state: Jhanvi instructor
-        </button>
-        {/* <Button>Send Message to Jhanvi</Button> */}
-        <StartChatButton
-          instructorId="37a8f2de-3df3-4d13-a32c-0ea0c64de833"
-          instructorName="jhanvi"
-        />
-        <StartChatButton
-          instructorId="54873533-4cce-4aa0-ab31-665a4fc5e788"
-          instructorName="Modi"
-        />
-        <button>Send Message to Modi</button>
-      </div>
+      <RecommendedCourses />
     </section>
+    // <div className="flex flex-col gap-10">
+    //   Homepage
+    //   <Button className="bg-brand-primary" onClick={foo}>
+    //     Click me
+    //   </Button>
+    //   <button onClick={addStudentUserToState} className=" py-4">
+    //     User state: Student
+    //   </button>
+    //   <button onClick={addInstructorUserToState} className=" py-4">
+    //     User state: Jhanvi instructor
+    //   </button>
+    //   {/* <Button>Send Message to Jhanvi</Button> */}
+    //   <StartChatButton
+    //     instructorId="37a8f2de-3df3-4d13-a32c-0ea0c64de833"
+    //     instructorName="jhanvi"
+    //   />
+    //   <StartChatButton
+    //     instructorId="54873533-4cce-4aa0-ab31-665a4fc5e788"
+    //     instructorName="Modi"
+    //   />
+    //   <button>Send Message to Modi</button>
+    // </div>
   );
 };

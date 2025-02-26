@@ -31,7 +31,6 @@ export const CourseCard: React.FC<CourseCardProps> = ({
   course = dummyCourse,
   className = "",
 }) => {
-  console.log("course img", course.banner_image);
   return (
     <article className={cn("w-80 xs:w-[400px] flex-shrink-0", className)}>
       {/* Image */}
@@ -40,17 +39,23 @@ export const CourseCard: React.FC<CourseCardProps> = ({
           className="w-full h-full"
           src={course.banner_image || "./src/assets/courseBanners/banner1.png"}
           alt={`Banner Image of ${course.title}`}
+          draggable={false}
         />
       </div>
       <div>
         <h3 className="line-clamp-2 font-bold uppercase mt-2">
           {course.title}
         </h3>
-        <div className="flex gap-2 px-1">
-          <img src="/personIcon.svg" alt="" />
-          <p className="text-sm text-brand-primary">
-            {course.Instructor?.full_name}
-          </p>
+        <div className="flex justify-between">
+          <div className="flex gap-2 px-1">
+            <img src="/personIcon.svg" alt="" />
+            <p className="text-sm text-brand-primary">
+              {course.Instructor?.full_name}
+            </p>
+          </div>
+          <div className="flex gap-2 px-4 bg-brand-primary rounded-full">
+            <p className="text-sm text-white">{course.Category?.name}</p>
+          </div>
         </div>
         {course.description && (
           <p className="line-clamp-3 tracking-wide">{course.description}</p>
