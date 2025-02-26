@@ -20,3 +20,20 @@ export interface Course {
     name: string;
   };
 }
+
+// Define the structure of the user object in the response
+export interface User {
+  id: string;
+  full_name: string;
+  email: string;
+  role: string;
+  avatar: string;
+}
+
+export interface APIResponse {
+  data: {
+    status: "success" | "error";
+  };
+  status: number;
+  statusText: string;
+}
