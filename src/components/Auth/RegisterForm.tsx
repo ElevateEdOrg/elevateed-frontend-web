@@ -8,6 +8,7 @@ import { login } from "@/redux/slices/userSlice";
 
 interface RegisterFormProps {
   authType: AuthStates | null;
+  setAuthType: React.Dispatch<React.SetStateAction<AuthStates | null>>;
 }
 
 interface FormData {
@@ -17,13 +18,17 @@ interface FormData {
   password: string;
 }
 
-export const RegisterForm: React.FC<RegisterFormProps> = ({ authType }) => {
+export const RegisterForm: React.FC<RegisterFormProps> = ({
+  authType,
+  setAuthType,
+}) => {
   const [formData, setFormData] = useState<FormData>({
     full_name: "",
     email: "",
     role: "student",
     password: "",
   });
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const dispatch = useDispatch();
@@ -36,7 +41,8 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ authType }) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
+    setLoading(true);
+    setError(null);
 
     try {
       const res: AuthUserResponse = await registerUser(
@@ -45,16 +51,27 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ authType }) => {
         formData.role,
         formData.password
       );
-      if (res.status !== 200) {
+      if (res.status !== 201) {
         throw new Error(res.data.message);
       }
-      console.log("res", res);
       dispatch(login(res.data.user));
     } catch (error) {
       const errorMessage =
         (error as AxiosError<{ message: string }>)?.response?.data?.message ||
         "Something went wrong!";
+      console.log("error", errorMessage);
       setError(errorMessage);
+    } finally {
+      setLoading(false);
+      if (authType === "register" && error === null) {
+        setFormData({
+          full_name: "",
+          email: "",
+          role: "student",
+          password: "",
+        });
+        setAuthType(null);
+      }
     }
   };
 
@@ -73,15 +90,20 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ authType }) => {
       >
         Register
       </h2>
-
       <form
-        className="flex flex-col gap-2 lg:gap-4 mt-3 md:mt-5 2xl:mt-10"
+        className="flex flex-col gap-2 lg:gap-4 mt-3 md:mt-5 2xl:mt-10 relative"
         onSubmit={handleSubmit}
       >
+        {error && (
+          <p className="absolute text-red-500 text-xs bottom-full right-0">
+            {error}
+          </p>
+        )}
         <input
           type="text"
           name="full_name"
           onChange={handleChange}
+          value={formData.full_name}
           placeholder="Enter your full name"
           className=" bg-white rounded-full shadow-xl  text-xs md:text-base px-4 py-2 md:py-3 focus-within:outline-none"
           required
@@ -90,6 +112,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ authType }) => {
           type="email"
           name="email"
           onChange={handleChange}
+          value={formData.email}
           placeholder="Enter your email"
           className=" bg-white rounded-full shadow-xl   text-xs md:text-base px-4 py-2 md:py-3 focus-within:outline-none"
           required
@@ -107,7 +130,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ authType }) => {
           type="submit"
           className="w-full bg-blue-600 rounded-full text-white py-2 md:py-3   text-xs md:text-base cursor-pointer hover:bg-blue-800"
         >
-          Submit
+          {loading ? "Loading..." : "Register"}
         </button>
       </form>
     </div>
