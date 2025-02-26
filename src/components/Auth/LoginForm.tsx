@@ -108,7 +108,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
             onClick={(e) => {
               e.preventDefault();
 
-              setAuthType("reset");
+              setAuthType("forgot");
             }}
             className="text-blue-600 font-bold hover:underline"
           >

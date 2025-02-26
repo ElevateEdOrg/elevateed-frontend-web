@@ -15,8 +15,8 @@ export const AuthModals: React.FC<{
       <article className="bg-white w-full sm:w-2/3 h-full lg:h-2/3 rounded-2xl shadow-2xl overflow-hidden relative flex">
         <AuthSider authType={authType} setAuthType={setAuthType} />
         <LoginForm authType={authType} setAuthType={setAuthType} />
-        <RegisterForm authType={authType} />
-        <ResetPasswordForm authType={authType} />
+        <RegisterForm authType={authType} setAuthType={setAuthType} />
+        <ResetPasswordForm authType={authType} setAuthType={setAuthType} />
         <IoMdClose
           onClick={() => setAuthType(null)}
           className="absolute top-4 right-4 cursor-pointer"

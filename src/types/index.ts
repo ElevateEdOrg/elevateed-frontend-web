@@ -1,4 +1,4 @@
-export type AuthStates = "login" | "register" | "reset";
+export type AuthStates = "login" | "register" | "forgot" | "reset" | "otp";
 export interface Course {
   id?: string;
   title: string;

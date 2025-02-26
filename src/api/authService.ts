@@ -43,3 +43,33 @@ export const registerUser = async (
     return handleApiError(error);
   }
 };
+
+export const forgotPassword = async (
+  email: string
+): Promise<AuthUserResponse> => {
+  try {
+    const response = api.post("/api/auth/forgot-password", {
+      email,
+    });
+    return response;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+export const resetPassword = async (
+  email: string,
+  otp: string,
+  password: string
+): Promise<AuthUserResponse> => {
+  try {
+    const response = api.post("/api/auth/reset-password", {
+      email,
+      otp,
+      password,
+    });
+    return response;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
