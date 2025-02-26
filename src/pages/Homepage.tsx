@@ -1,13 +1,22 @@
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "@/redux/slices/userSlice";
-import { StartChatButton } from "@/components";
+import {
+  BrowseCourses,
+  CourseCard,
+  HeroBanner,
+  PopularInstructors,
+  RecommendedCourses,
+  StartChatButton,
+} from "@/components";
 import React from "react";
 import { RootState } from "@/redux/store";
 import { Button } from "@/components/ui/button";
+import { dummyCourse } from "@/../db";
 
 export const Homepage: React.FC = () => {
   const state = useSelector((state: RootState) => state);
   const dispatch = useDispatch();
+
   const foo = () => {
     console.log(state);
   };
@@ -37,29 +46,39 @@ export const Homepage: React.FC = () => {
   };
 
   return (
-    <section className="max-h-screen">
-      <div className="flex flex-col gap-10">
-        Homepage
-        <Button className="bg-brand-primary" onClick={foo}>
-          Click me
-        </Button>
-        <button onClick={addStudentUserToState} className=" py-4">
-          User state: Student
-        </button>
-        <button onClick={addInstructorUserToState} className=" py-4">
-          User state: Jhanvi instructor
-        </button>
-        {/* <Button>Send Message to Jhanvi</Button> */}
-        <StartChatButton
-          instructorId="37a8f2de-3df3-4d13-a32c-0ea0c64de833"
-          instructorName="jhanvi"
-        />
-        <StartChatButton
-          instructorId="54873533-4cce-4aa0-ab31-665a4fc5e788"
-          instructorName="Modi"
-        />
-        <button>Send Message to Modi</button>
-      </div>
+    <section className="w-screen pt-24 px-4 xl:px-32 overflow-x-hidden">
+      <article className="flex flex-col items-center w-full pb-10 ">
+        <HeroBanner />
+      </article>
+      <article className="py-4">
+        <h2 className="text-2xl font-bold border-b pb-4 ">Continue Watching</h2>
+        <CourseCard course={dummyCourse} className="pt-4" />
+      </article>
+      <BrowseCourses />
+      <RecommendedCourses />
+      <PopularInstructors />
     </section>
+    // <div className="flex flex-col gap-10">
+    //   Homepage
+    //   <Button className="bg-brand-primary" onClick={foo}>
+    //     Click me
+    //   </Button>
+    //   <button onClick={addStudentUserToState} className=" py-4">
+    //     User state: Student
+    //   </button>
+    //   <button onClick={addInstructorUserToState} className=" py-4">
+    //     User state: Jhanvi instructor
+    //   </button>
+    //   {/* <Button>Send Message to Jhanvi</Button> */}
+    //   <StartChatButton
+    //     instructorId="37a8f2de-3df3-4d13-a32c-0ea0c64de833"
+    //     instructorName="jhanvi"
+    //   />
+    //   <StartChatButton
+    //     instructorId="54873533-4cce-4aa0-ab31-665a4fc5e788"
+    //     instructorName="Modi"
+    //   />
+    //   <button>Send Message to Modi</button>
+    // </div>
   );
 };

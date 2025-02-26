@@ -16,3 +16,11 @@ function App() {
 }
 
 export default App;
+
+// TODO :
+// Add currency conversion
+// Add backend side filtering of categories
+// Add backend side filtering of courses based on search query
+// Add progress bar under the last watched course
+// Add learning path on homepage
+// Pagination in course apis
