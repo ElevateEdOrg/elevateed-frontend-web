@@ -30,6 +30,15 @@ export interface FetchCategoriesResponse {
   };
 }
 
+export interface FetchUserCoursesResponse {
+  status: number;
+  data: {
+    data: {
+      EnrolledCourses: Course[];
+    };
+  };
+}
+
 import { api, handleApiError } from "@/lib/axios";
 import { Course } from "@/types";
 
@@ -52,7 +61,7 @@ export const fetchAllCategories =
     }
   };
 
-export const fetchUserCourses = async (): Promise<FetchCoursesResponse> => {
+export const fetchUserCourses = async (): Promise<FetchUserCoursesResponse> => {
   try {
     const response = api.post("/api/courses/getcourses");
     return response;

@@ -84,7 +84,7 @@ export const updateProfile = async (
       },
     });
 
-    return response.data;
+    return response;
   } catch (error) {
     return handleApiError(error);
   }
