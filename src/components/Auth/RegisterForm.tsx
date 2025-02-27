@@ -55,6 +55,10 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
         throw new Error(res.data.message);
       }
       dispatch(login(res.data.user));
+      if (res.data.status === "success") {
+        alert("Register successful");
+        setAuthType(null);
+      }
     } catch (error) {
       const errorMessage =
         (error as AxiosError<{ message: string }>)?.response?.data?.message ||
@@ -70,7 +74,6 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
           role: "student",
           password: "",
         });
-        setAuthType(null);
       }
     }
   };
@@ -128,7 +131,8 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
         <PasswordInput value={formData.password} onChange={handleChange} />
         <button
           type="submit"
-          className="w-full bg-blue-600 rounded-full text-white py-2 md:py-3   text-xs md:text-base cursor-pointer hover:bg-blue-800"
+          disabled={loading}
+          className="w-full bg-blue-600 rounded-full text-white py-2 md:py-3   text-xs md:text-base cursor-pointer hover:bg-blue-800 disabled:bg-gray-500 disabled:cursor-not-allowed"
         >
           {loading ? "Loading..." : "Register"}
         </button>

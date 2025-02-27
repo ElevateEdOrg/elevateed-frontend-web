@@ -2,9 +2,13 @@ import React from "react";
 import { Link } from "react-router";
 import { CiSearch } from "react-icons/ci";
 import { SidebarTrigger } from "../ui/sidebar";
-import { IoMdCart } from "react-icons/io";
+import { IoIosBookmarks, IoMdCart } from "react-icons/io";
 import { AuthStates } from "@/types";
 import { AuthModals } from "../Auth/AuthModals";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { CustomAvatar } from "./CustomAvatar";
 
 interface HeaderProps {
   authType: AuthStates | null;
@@ -12,6 +16,9 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ authType, setAuthType }) => {
+  const state = useSelector((state: RootState) => state);
+
+  const { user } = state;
   // const [authType, setAuthType] = useState<AuthStates | null>(null);
   return (
     <nav className="fixed w-screen h-20 z-50 bg-white flex justify-between items-center px-4 md:px-14 xl:px-32 gap-3 md:gap-5 lg:gap-24 border-b">
@@ -38,18 +45,24 @@ export const Header: React.FC<HeaderProps> = ({ authType, setAuthType }) => {
         >
           <IoMdCart />
         </Link>
-        <button
-          onClick={() => setAuthType("login")}
-          className="border-2 border-primary px-4 py-1 font-semibold rounded-2xl text-xs md:text-base cursor-pointer"
-        >
-          Login
-        </button>
-        <button
-          onClick={() => setAuthType("register")}
-          className="border-2 border-transparent hover:border-black-90 bg-brand-primary px-4 py-1 font-semibold rounded-2xl text-white text-xs md:text-base"
-        >
-          Sign up
-        </button>
+        {!user.isLoggedIn ? (
+          <>
+            <button
+              onClick={() => setAuthType("login")}
+              className="border-2 border-primary px-4 py-1 font-semibold rounded-2xl text-xs md:text-base cursor-pointer"
+            >
+              Login
+            </button>
+            <button
+              onClick={() => setAuthType("register")}
+              className="border-2 border-transparent hover:border-black-90 bg-brand-primary px-4 py-1 font-semibold rounded-2xl text-white text-xs md:text-base"
+            >
+              Sign up
+            </button>
+          </>
+        ) : (
+          <CustomAvatar avatar={user.userInfo.avatar} />
+        )}
       </div>
     </nav>
   );

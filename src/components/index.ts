@@ -12,3 +12,5 @@ export * from "./Course/BrowseCourses";
 export * from "./Course/RecommendedCourses";
 export * from "./Instructor/PopularInstructors";
 export * from "./Footer/Footer";
+export * from "./Dashboard/MyCourses";
+export * from "./Dashboard/UpdateProfileForm";

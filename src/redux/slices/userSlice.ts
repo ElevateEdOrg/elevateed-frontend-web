@@ -6,6 +6,7 @@ interface UserState {
     full_name: string;
     email: string;
     role: string;
+    avatar: string;
   };
   isLoggedIn: boolean;
 }
@@ -16,6 +17,7 @@ const initialState: UserState = {
     full_name: "",
     email: "",
     role: "",
+    avatar: "",
   },
   isLoggedIn: false,
 };
@@ -29,7 +31,13 @@ const userSlice = createSlice({
       state.isLoggedIn = true;
     },
     logout: (state) => {
-      state.userInfo = { id: null, full_name: "", email: "", role: "" };
+      state.userInfo = {
+        id: null,
+        full_name: "",
+        email: "",
+        role: "",
+        avatar: "",
+      };
       state.isLoggedIn = false;
     },
   },

@@ -64,11 +64,18 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
     try {
       const res = await resetPassword(email, otp, password);
       console.log(res);
+      if (res.status !== 200) {
+        throw new Error(res.data.message);
+      }
+      alert("Password changed successfully");
+      setAuthType("login");
     } catch (error) {
       const errorMessage =
         (error as AxiosError<{ message: string }>)?.response?.data?.message ||
         "Something went wrong!";
       setError(errorMessage);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -105,7 +112,7 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 rounded-full text-white py-3  text-xs md:text-base cursor-pointer hover:bg-blue-800 my-4 disabled:bg-gray-600"
+            className="w-full bg-blue-600 rounded-full text-white py-3  text-xs md:text-base cursor-pointer hover:bg-blue-800 my-4 disabled:bg-gray-500 disabled:cursor-not-allowed"
           >
             {loading ? "Loading..." : "Send OTP to your mail"}
           </button>
@@ -167,9 +174,9 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 rounded-full text-white py-3  text-xs md:text-base cursor-pointer hover:bg-blue-800 my-2 disabled:bg-gray-600"
+            className="w-full bg-blue-600 rounded-full text-white py-3  text-xs md:text-base cursor-pointer hover:bg-blue-800 my-2 disabled:bg-gray-500 disabled:cursor-not-allowed"
           >
-            {loading ? "Loading..." : "Send OTP to your mail"}
+            {loading ? "Loading..." : "Change Password"}
           </button>
         </form>
       </div>
