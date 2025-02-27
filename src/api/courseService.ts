@@ -60,3 +60,14 @@ export const fetchUserCourses = async (): Promise<FetchCoursesResponse> => {
     return handleApiError(error);
   }
 };
+
+export const fetchCourseByQuery = async (
+  query: string
+): Promise<FetchCoursesResponse> => {
+  try {
+    const response = api.get(`/api/courses/searchcourse?search=${query}`);
+    return response;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
