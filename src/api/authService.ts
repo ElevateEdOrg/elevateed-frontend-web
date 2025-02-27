@@ -78,8 +78,13 @@ export const updateProfile = async (
   formData: FormData
 ): Promise<AuthUserResponse> => {
   try {
-    const response = api.post("/api/auth/update-profile", formData);
-    return response;
+    const response = await api.post("/api/auth/update-profile", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    return response.data;
   } catch (error) {
     return handleApiError(error);
   }

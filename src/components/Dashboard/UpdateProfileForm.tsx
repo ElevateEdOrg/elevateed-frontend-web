@@ -1,10 +1,12 @@
 import { AuthUserResponse, updateProfile } from "@/api/authService";
+import { login } from "@/redux/slices/userSlice";
 import { RootState } from "@/redux/store";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export const UpdateProfileForm = () => {
   const state = useSelector((state: RootState) => state);
+  const dispatch = useDispatch();
   const { user } = state;
   const [fullName, setFullName] = useState(user.userInfo.full_name);
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
@@ -38,6 +40,7 @@ export const UpdateProfileForm = () => {
     try {
       const response: AuthUserResponse = await updateProfile(formData);
       console.log(response);
+      dispatch(login(response.data.user));
     } catch (error) {
       console.error(error);
     } finally {
