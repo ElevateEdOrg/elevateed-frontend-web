@@ -51,3 +51,12 @@ export const fetchAllCategories =
       return handleApiError(error);
     }
   };
+
+export const fetchUserCourses = async (): Promise<FetchCoursesResponse> => {
+  try {
+    const response = api.post("/api/courses/getcourses");
+    return response;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
