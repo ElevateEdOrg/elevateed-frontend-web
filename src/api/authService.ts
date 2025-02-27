@@ -73,3 +73,14 @@ export const resetPassword = async (
     return handleApiError(error);
   }
 };
+
+export const updateProfile = async (
+  formData: FormData
+): Promise<AuthUserResponse> => {
+  try {
+    const response = api.post("/api/auth/update-profile", formData);
+    return response;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};

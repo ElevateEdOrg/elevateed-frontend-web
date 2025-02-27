@@ -36,14 +36,23 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         formData.email,
         formData.password
       );
-      console.log("res", res);
       if (res.status !== 200) {
         // setError(res.statusText);
         throw new Error(res.data.message);
       }
+
       const data = res.data;
+
       const user = data.user;
       dispatch(login(user));
+      if (res.data.status === "success") {
+        alert("Login successful");
+        // Set data.access_token to localStorage
+        localStorage.setItem("access_token", data.access_token!);
+        setFormData(initialState);
+        setLoading(false);
+        setAuthType(null);
+      }
     } catch (error) {
       const errorMessage =
         (error as AxiosError<{ message: string }>)?.response?.data?.message ||
@@ -51,14 +60,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({
       setError(errorMessage);
     } finally {
       setLoading(false);
-      if (error) {
-        setTimeout(() => {
-          setError(null);
-        }, 3000);
-      } else {
-        setFormData(initialState);
-        setAuthType(null);
-      }
     }
   };
   return (
@@ -98,7 +99,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
           type="submit"
           // onClick={handleSubmit}
           disabled={loading}
-          className="w-full bg-blue-600 rounded-full text-white py-3  text-xs md:text-base cursor-pointer hover:bg-blue-800 my-4"
+          className="w-full bg-blue-600 rounded-full text-white py-3  text-xs md:text-base cursor-pointer hover:bg-blue-800 my-4 disabled:bg-gray-500 disabled:cursor-not-allowed"
         >
           {loading ? "Loading" : "Submit"}
         </button>
