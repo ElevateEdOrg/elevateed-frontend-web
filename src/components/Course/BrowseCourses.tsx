@@ -1,6 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { CourseCard } from "./CourseCard";
-import { dummyCategories, dummyCourses } from "@/../db";
+import {
+  fetchAllCategories,
+  fetchAllCourses,
+  FetchCategoriesResponse,
+  FetchCoursesResponse,
+} from "@/api/courseService";
+import { Course } from "@/types";
 
 export const BrowseCourses = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -9,7 +15,48 @@ export const BrowseCourses = () => {
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
   const [category, setCategory] = useState("All Categories");
-  const [filteredCourses, setFilteredCourses] = useState(dummyCourses);
+  const [fetchedCourses, setFetchedCourses] = useState<Course[]>([]);
+  const [filteredCourses, setFilteredCourses] = useState<Course[]>([]);
+  const [categories, setCategories] = useState<{ id: string; name: string }[]>(
+    []
+  );
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const response: FetchCoursesResponse = await fetchAllCourses();
+        console.log("Response", response);
+        const { data } = response;
+        setFetchedCourses(data.data);
+        setFilteredCourses(data.data);
+      } catch (error) {
+        console.error("Error fetching courses:", error);
+      }
+    };
+
+    const fetchCategories = async () => {
+      try {
+        const response: FetchCategoriesResponse = await fetchAllCategories();
+        const { data } = response.data;
+        setCategories(data);
+        console.log("Categories", data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+    fetchCourses();
+    fetchCategories();
+  }, []);
+
+  useEffect(() => {
+    if (category === "All Categories") {
+      setFilteredCourses(fetchedCourses);
+      return;
+    }
+    setFilteredCourses(() =>
+      fetchedCourses.filter((course) => course.Category?.name === category)
+    );
+  }, [category, fetchedCourses]);
 
   const handleMouseDown = (e: React.MouseEvent) => {
     if (!scrollRef.current) return;
@@ -31,23 +78,12 @@ export const BrowseCourses = () => {
   };
 
   useEffect(() => {
-    if (category === "All Categories") {
-      setFilteredCourses(dummyCourses);
-    } else {
-      setFilteredCourses(
-        dummyCourses.filter((course) => course.Category?.name === category)
-      );
-    }
-  }, [category]);
-
-  // Enable horizontal scrolling using the mouse wheel
-  useEffect(() => {
     const categoryContainer = categoryRef.current;
     if (!categoryContainer) return;
 
     const handleWheelScroll = (e: WheelEvent) => {
       e.preventDefault();
-      categoryContainer.scrollLeft += e.deltaY; // Scroll horizontally
+      categoryContainer.scrollLeft += e.deltaY;
     };
 
     categoryContainer.addEventListener("wheel", handleWheelScroll);
@@ -57,9 +93,8 @@ export const BrowseCourses = () => {
 
   return (
     <article>
-      <h2 className="text-2xl font-bold border-b pb-4 ">Browse courses</h2>
+      <h2 className="text-2xl font-bold border-b pb-4">Browse courses</h2>
 
-      {/* Categories with Horizontal Scroll on Wheel */}
       <div
         ref={categoryRef}
         className="flex gap-4 scrollbar-hidden py-4 w-full overflow-x-scroll"
@@ -70,7 +105,7 @@ export const BrowseCourses = () => {
         >
           All Categories
         </button>
-        {dummyCategories.map((category) => (
+        {categories.map((category) => (
           <button
             key={category.id}
             onClick={() => setCategory(category.name)}
@@ -81,7 +116,6 @@ export const BrowseCourses = () => {
         ))}
       </div>
 
-      {/* Horizontal Scrollable Course List */}
       <div
         ref={scrollRef}
         className="flex overflow-scroll w-full gap-4 py-4 scrollbar-hidden flex-nowrap"

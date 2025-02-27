@@ -10,6 +10,8 @@ export interface Course {
   welcome_msg: string;
   intro_video: string;
   created_at: string;
+  total_students: number;
+  avg_rating: number;
   Instructor: {
     id: string;
     full_name: string;
