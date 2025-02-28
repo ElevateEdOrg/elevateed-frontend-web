@@ -31,7 +31,6 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
     setError(null);
     try {
       const res: AuthUserResponse = await forgotPassword(email);
-      console.log(res);
       if (res.status === 200) {
         alert("OTP sent to your mail");
         setAuthType("otp");
@@ -55,7 +54,6 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
     e.preventDefault();
     setLoading(true);
     setError(null);
-    console.log("Data:", email, otp, password, confirmPassword);
     if (password !== confirmPassword) {
       setError("Passwords do not match");
       setLoading(false);
@@ -63,7 +61,6 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
     }
     try {
       const res = await resetPassword(email, otp, password);
-      console.log(res);
       if (res.status !== 200) {
         throw new Error(res.data.message);
       }

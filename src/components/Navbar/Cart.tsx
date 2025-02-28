@@ -16,7 +16,6 @@ export const Cart = () => {
 
   const handleClick = () => {
     setModal(true);
-    console.log("cart", cart);
   };
 
   return (
