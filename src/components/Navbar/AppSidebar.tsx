@@ -15,32 +15,22 @@ import {
 } from "@/components/ui/sidebar";
 import { AuthStates } from "@/types";
 import { Dispatch, SetStateAction } from "react";
+import { Link } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import { logout } from "@/redux/slices/userSlice";
 
 // Menu items.
-const items = [
-  {
-    title: "Home",
-    url: "#",
-    icon: IoMdHome,
-  },
-  {
-    title: "My Learning",
-    url: "#",
-    icon: IoIosBookmarks,
-  },
-  {
-    title: "Cart",
-    url: "#",
-    icon: IoMdCart,
-  },
-];
 interface AppSidebarProps {
   authType: AuthStates | null;
   setAuthType: Dispatch<SetStateAction<AuthStates | null>>;
 }
 
 export const AppSidebar: React.FC<AppSidebarProps> = ({ setAuthType }) => {
-  const { openMobile, setOpenMobile } = useSidebar();
+  const { setOpenMobile } = useSidebar();
+  const state = useSelector((state: RootState) => state);
+  const { user } = state;
+  const dispatch = useDispatch();
   return (
     <Sidebar collapsible="icon">
       <SidebarContent className="bg-white">
@@ -52,44 +42,72 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({ setAuthType }) => {
           </SidebarGroupLabel>
           <SidebarGroupContent className="">
             <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-              {/* Login Button */}
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <button
-                    onClick={() => {
-                      setAuthType("login");
-                      setOpenMobile(false);
-                    }}
-                  >
-                    <RiLoginCircleFill />
-                    <span>Login</span>
-                  </button>
+                  <Link to="/">
+                    <IoMdHome />
+                    <span>Home</span>
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
-              {/* Register button */}
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild>
+
+              {user.isLoggedIn ? (
+                <>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild>
+                      <Link to="/">
+                        <IoMdCart />
+                        <span>Cart</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild>
+                      <Link to="/profile">
+                        <IoIosBookmarks />
+                        <span>My Profile</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
                   <button
-                    onClick={() => {
-                      setAuthType("register");
-                      setOpenMobile(false);
-                    }}
+                    onClick={() => dispatch(logout())}
+                    className="border-t border-black py-2 cursor-pointer hover:text-red-500"
                   >
-                    <LiaSignInAltSolid />
-                    <span>Sign up</span>
+                    Logout
                   </button>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
+                </>
+              ) : (
+                <>
+                  {/* Login Button */}
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild>
+                      <button
+                        onClick={() => {
+                          setAuthType("login");
+                          setOpenMobile(false);
+                        }}
+                      >
+                        <RiLoginCircleFill />
+                        <span>Login</span>
+                      </button>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                  {/* Register button */}
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild>
+                      <button
+                        onClick={() => {
+                          setAuthType("register");
+                          setOpenMobile(false);
+                        }}
+                      >
+                        <LiaSignInAltSolid />
+                        <span>Sign up</span>
+                      </button>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                </>
+              )}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

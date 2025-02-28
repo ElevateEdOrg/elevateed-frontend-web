@@ -60,7 +60,7 @@ export const UpdateProfileForm = () => {
             <img
               src={previewAvatar}
               alt="Profile"
-              className="rounded-full w-32 h-32"
+              className="rounded-full w-32 h-32 object-cover"
             />
           </label>
           <input
