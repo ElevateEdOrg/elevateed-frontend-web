@@ -59,12 +59,6 @@ export const Header: React.FC<HeaderProps> = ({ authType, setAuthType }) => {
 
       {/* Login and register */}
       <div className="hidden md:flex justify-center items-center gap-2 xl:gap-5">
-        <Link
-          className="p-2 hover:bg-gray-200 font-semibold rounded-full text-xs md:text-base"
-          to="#"
-        >
-          <IoMdCart />
-        </Link>
         {!user.isLoggedIn ? (
           <>
             <button
@@ -81,7 +75,15 @@ export const Header: React.FC<HeaderProps> = ({ authType, setAuthType }) => {
             </button>
           </>
         ) : (
-          <CustomAvatar avatar={user.userInfo.avatar} />
+          <>
+            <Link
+              className="p-2 hover:bg-gray-200 font-semibold rounded-full text-xs md:text-base"
+              to="#"
+            >
+              <IoMdCart />
+            </Link>
+            <CustomAvatar avatar={user.userInfo.avatar} />
+          </>
         )}
       </div>
     </nav>
