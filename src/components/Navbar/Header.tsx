@@ -6,10 +6,12 @@ import { IoMdCart } from "react-icons/io";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { CustomAvatar } from "./CustomAvatar";
+import { AuthStates } from "@/types";
+import { Cart } from "./Cart";
 
 interface HeaderProps {
   authType: string | null;
-  setAuthType: React.Dispatch<React.SetStateAction<string | null>>;
+  setAuthType: React.Dispatch<React.SetStateAction<AuthStates | null>>;
 }
 
 export const Header: React.FC<HeaderProps> = ({ authType, setAuthType }) => {
@@ -76,12 +78,7 @@ export const Header: React.FC<HeaderProps> = ({ authType, setAuthType }) => {
           </>
         ) : (
           <>
-            <Link
-              className="p-2 hover:bg-gray-200 font-semibold rounded-full text-xs md:text-base"
-              to="#"
-            >
-              <IoMdCart />
-            </Link>
+            <Cart />
             <CustomAvatar avatar={user.userInfo.avatar} />
           </>
         )}

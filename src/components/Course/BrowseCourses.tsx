@@ -11,9 +11,6 @@ import { Course } from "@/types";
 export const BrowseCourses = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const categoryRef = useRef<HTMLDivElement>(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
   const [category, setCategory] = useState("All Categories");
   const [fetchedCourses, setFetchedCourses] = useState<Course[]>([]);
   const [filteredCourses, setFilteredCourses] = useState<Course[]>([]);
@@ -25,7 +22,6 @@ export const BrowseCourses = () => {
     const fetchCourses = async () => {
       try {
         const response: FetchCoursesResponse = await fetchAllCourses();
-        console.log("Response", response);
         const { data } = response;
         setFetchedCourses(data.data);
         setFilteredCourses(data.data);
@@ -39,11 +35,11 @@ export const BrowseCourses = () => {
         const response: FetchCategoriesResponse = await fetchAllCategories();
         const { data } = response.data;
         setCategories(data);
-        console.log("Categories", data);
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
     };
+
     fetchCourses();
     fetchCategories();
   }, []);
@@ -58,37 +54,43 @@ export const BrowseCourses = () => {
     );
   }, [category, fetchedCourses]);
 
-  const handleMouseDown = (e: React.MouseEvent) => {
-    if (!scrollRef.current) return;
-    setIsDragging(true);
-    setStartX(e.pageX - scrollRef.current.offsetLeft);
-    setScrollLeft(scrollRef.current.scrollLeft);
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging || !scrollRef.current) return;
-    e.preventDefault();
-    const x = e.pageX - scrollRef.current.offsetLeft;
-    const walk = x - startX;
-    scrollRef.current.scrollLeft = scrollLeft - walk;
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
-
   useEffect(() => {
-    const categoryContainer = categoryRef.current;
-    if (!categoryContainer) return;
-
     const handleWheelScroll = (e: WheelEvent) => {
       e.preventDefault();
-      categoryContainer.scrollLeft += e.deltaY;
+      if (scrollRef.current) {
+        scrollRef.current.scrollLeft += e.deltaY;
+      }
     };
 
-    categoryContainer.addEventListener("wheel", handleWheelScroll);
-    return () =>
-      categoryContainer.removeEventListener("wheel", handleWheelScroll);
+    const handleCategoryWheelScroll = (e: WheelEvent) => {
+      e.preventDefault();
+      if (categoryRef.current) {
+        categoryRef.current.scrollLeft += e.deltaY;
+      }
+    };
+
+    const courseContainer = scrollRef.current;
+    const categoryContainer = categoryRef.current;
+
+    if (courseContainer) {
+      courseContainer.addEventListener("wheel", handleWheelScroll);
+    }
+
+    if (categoryContainer) {
+      categoryContainer.addEventListener("wheel", handleCategoryWheelScroll);
+    }
+
+    return () => {
+      if (courseContainer) {
+        courseContainer.removeEventListener("wheel", handleWheelScroll);
+      }
+      if (categoryContainer) {
+        categoryContainer.removeEventListener(
+          "wheel",
+          handleCategoryWheelScroll
+        );
+      }
+    };
   }, []);
 
   return (
@@ -119,10 +121,6 @@ export const BrowseCourses = () => {
       <div
         ref={scrollRef}
         className="flex overflow-scroll w-full gap-4 py-4 scrollbar-hidden flex-nowrap"
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseUp}
       >
         {filteredCourses.map((course) => (
           <CourseCard key={course.id} course={course} />

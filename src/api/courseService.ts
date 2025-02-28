@@ -19,6 +19,12 @@ export interface FetchCoursesResponse {
     data: Course[];
   };
 }
+export interface FetchSingleCourseResponse {
+  status: number;
+  data: {
+    data: Course;
+  };
+}
 
 export interface FetchCategoriesResponse {
   status: number;
@@ -75,6 +81,17 @@ export const fetchCourseByQuery = async (
 ): Promise<FetchCoursesResponse> => {
   try {
     const response = api.get(`/api/courses/searchcourse?search=${query}`);
+    return response;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+export const fetchUnpaidCourseFromId = async (
+  courseId: string
+): Promise<FetchSingleCourseResponse> => {
+  try {
+    const response = api.get(`/api/courses/getcourses/${courseId}`);
     return response;
   } catch (error) {
     return handleApiError(error);

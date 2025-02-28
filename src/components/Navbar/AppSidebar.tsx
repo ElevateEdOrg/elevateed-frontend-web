@@ -19,6 +19,7 @@ import { Link } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { logout } from "@/redux/slices/userSlice";
+import { Cart } from "./Cart";
 
 // Menu items.
 interface AppSidebarProps {
@@ -42,7 +43,7 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({ setAuthType }) => {
           </SidebarGroupLabel>
           <SidebarGroupContent className="">
             <SidebarMenu>
-              <SidebarMenuItem>
+              <SidebarMenuItem onClick={() => setOpenMobile(false)}>
                 <SidebarMenuButton asChild>
                   <Link to="/">
                     <IoMdHome />
@@ -55,13 +56,10 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({ setAuthType }) => {
                 <>
                   <SidebarMenuItem>
                     <SidebarMenuButton asChild>
-                      <Link to="/">
-                        <IoMdCart />
-                        <span>Cart</span>
-                      </Link>
+                      <Cart />
                     </SidebarMenuButton>
                   </SidebarMenuItem>
-                  <SidebarMenuItem>
+                  <SidebarMenuItem onClick={() => setOpenMobile(false)}>
                     <SidebarMenuButton asChild>
                       <Link to="/profile">
                         <IoIosBookmarks />
