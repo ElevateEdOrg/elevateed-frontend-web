@@ -40,7 +40,7 @@ export const UpdateProfileForm = () => {
     try {
       const response: AuthUserResponse = await updateProfile(formData);
       console.log(response);
-      dispatch(login(response.data.user));
+      dispatch(login({ ...response.data.user, role: user.userInfo.role }));
     } catch (error) {
       console.error(error);
     } finally {
