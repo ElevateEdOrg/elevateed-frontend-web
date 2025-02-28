@@ -26,7 +26,6 @@ export const SingleCourse = () => {
       try {
         const response: FetchSingleCourseResponse =
           await fetchUnpaidCourseFromId(courseId);
-        console.log(response);
         setCourse(response.data.data);
       } catch (error) {
         console.log(error);
