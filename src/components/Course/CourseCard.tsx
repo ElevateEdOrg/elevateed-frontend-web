@@ -2,6 +2,7 @@ import React from "react";
 import { FaRupeeSign } from "react-icons/fa";
 import { Course } from "../../types/index";
 import { cn } from "@/lib/utils";
+import { useNavigate } from "react-router";
 
 const dummyCourse: Partial<Course> = {
   banner_image: "./src/assets/courseBanners/banner3.png",
@@ -31,10 +32,17 @@ export const CourseCard: React.FC<CourseCardProps> = ({
   course = dummyCourse,
   className = "",
 }) => {
+  const navigate = useNavigate();
   return (
-    <article className={cn("w-80 xs:w-[400px] flex-shrink-0", className)}>
+    <article
+      onClick={() => navigate(`/courses/${course.id}`)}
+      className={cn(
+        "w-80 xs:w-[400px] flex-shrink-0 cursor-pointer group  ",
+        className
+      )}
+    >
       {/* Image */}
-      <div className="w-full aspect-video rounded-4xl overflow-hidden">
+      <div className="w-full aspect-video rounded-4xl group-hover:shadow-md group-hover:shadow-gray-700 transition-all duration-200 overflow-hidden">
         <img
           className="w-full h-full"
           src={course.banner_image || "./src/assets/courseBanners/banner1.png"}

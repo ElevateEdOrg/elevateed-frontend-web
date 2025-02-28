@@ -1,3 +1,4 @@
+import { AuthStates } from "@/types";
 import { createSlice } from "@reduxjs/toolkit";
 
 interface UserState {
@@ -9,6 +10,7 @@ interface UserState {
     avatar: string;
   };
   isLoggedIn: boolean;
+  authState: AuthStates | null;
 }
 
 const initialState: UserState = {
@@ -19,6 +21,7 @@ const initialState: UserState = {
     role: "",
     avatar: "",
   },
+  authState: null,
   isLoggedIn: false,
 };
 
@@ -40,8 +43,11 @@ const userSlice = createSlice({
       };
       state.isLoggedIn = false;
     },
+    setAuthState: (state, action) => {
+      state.authState = action.payload;
+    },
   },
 });
 
-export const { login, logout } = userSlice.actions;
+export const { login, logout, setAuthState } = userSlice.actions;
 export default userSlice.reducer;

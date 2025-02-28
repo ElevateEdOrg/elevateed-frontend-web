@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router";
-import { RootLayout, Homepage, Profile } from "@/pages";
+import { RootLayout, Homepage, Profile, SingleCourse } from "@/pages";
 import SearchResults from "./pages/SearchResults";
 function App() {
   return (
@@ -9,6 +9,8 @@ function App() {
           <Route index element={<Homepage />} />
           <Route path="profile" element={<Profile />} />
           <Route path="search" element={<SearchResults />} />
+          {/* Dynamic route for course */}
+          <Route path="courses/:courseId" element={<SingleCourse />} />
           <Route path="*" element={<h1>Not Found</h1>} />
         </Route>
       </Routes>
