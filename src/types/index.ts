@@ -1,29 +1,56 @@
 export type AuthStates = "login" | "register" | "forgot" | "reset" | "otp";
+// export interface Course {
+//   id?: string;
+//   title: string;
+//   description: string;
+//   instructor_id: string;
+//   price: number;
+//   category_id: string;
+//   banner_image: string;
+//   welcome_msg: string;
+//   intro_video: string;
+//   created_at: string;
+//   total_students: number;
+//   avg_rating: number;
+//   Instructor: {
+//     id: string;
+//     full_name: string;
+//     email: string;
+//   };
+//   Category: {
+//     id: string;
+//     name: string;
+//   };
+// }
+
+// Define the structure of the user object in the response
+
 export interface Course {
-  id?: string;
+  id: string;
   title: string;
   description: string;
-  instructor_id: string;
-  price: number;
+  price: string;
   category_id: string;
   banner_image: string;
   welcome_msg: string;
   intro_video: string;
   created_at: string;
-  total_students: number;
-  avg_rating: number;
+  updated_at: string;
+  total_students?:number;
+  avg_rating?:number;
+  Category: {
+    id: string;
+    name: string;
+  };
   Instructor: {
     id: string;
     full_name: string;
     email: string;
   };
-  Category: {
-    id: string;
-    name: string;
+  Enrollment: {
+    progress: string;
   };
 }
-
-// Define the structure of the user object in the response
 export interface User {
   id: string;
   full_name: string;

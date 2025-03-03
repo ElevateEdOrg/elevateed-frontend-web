@@ -6,6 +6,7 @@ import {
 } from "../../redux/slices/chatSlice";
 import { useEffect } from "react";
 import { RootState } from "@/redux/store";
+import {API_BASE_URL} from "../../lib/axios"
 export const UserChats = () => {
   // const userA = "1b0a44e1-3475-4391-9b2d-3e1b78105c38";
   const chatState = useSelector((state: RootState) => state.chat);
@@ -17,7 +18,7 @@ export const UserChats = () => {
     // Fetch all chats of userA
     const fetchChats = async () => {
       const res = await fetch(
-        `http://localhost:8000/api/chat/list/${userInfo.id}`
+        `${API_BASE_URL}/api/chat/list/${userInfo.id}`
       );
       if (res.status === 500) {
         return;

@@ -25,19 +25,21 @@ import {
 //   id: "oirjoieofn1o2nro2nfo23knro2fkn3ont",
 // };
 
-interface CourseCardProps {
+interface MylearningCardProps {
   course: Course;
   className?: string;
 }
 
-export const CourseCard: React.FC<CourseCardProps> = ({
+export const MyLearningsCard: React.FC<MylearningCardProps> = ({
   course,
   className = "",
 }) => {
+
+  
   const navigate = useNavigate();
   return (
     <article
-      onClick={() => navigate(`/courses/${course.id}`)}
+      onClick={() => navigate(`/courses/myLearning/${course.id}`)}
       className={cn(
         "w-80 xs:w-[400px] flex-shrink-0 cursor-pointer group  ",
         className
