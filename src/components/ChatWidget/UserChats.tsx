@@ -7,6 +7,7 @@ import {
 import { useEffect } from "react";
 import { RootState } from "@/redux/store";
 import { API_BASE_URL } from "../../lib/axios";
+import { DefaultProfileImg } from "@/assets";
 export const UserChats = () => {
   // const userA = "1b0a44e1-3475-4391-9b2d-3e1b78105c38";
   const chatState = useSelector((state: RootState) => state.chat);
@@ -17,9 +18,8 @@ export const UserChats = () => {
   useEffect(() => {
     // Fetch all chats of userA
     const fetchChats = async () => {
- 
       const res = await fetch(`${API_BASE_URL}/api/chat/list/${userInfo.id}`);
- 
+
       if (res.status === 500) {
         return;
       }
@@ -74,7 +74,7 @@ export const UserChats = () => {
               <div className=" rounded-full bg-slate-700  overflow-hidden flex items-center justify-center shadow-sm shadow-slate-400">
                 <img
                   className="object-cover w-12 h-12 aspect-square rounded-full"
-                  src={receiver_avatar || "./defaultProfile.png"}
+                  src={receiver_avatar || DefaultProfileImg}
                   alt=""
                 />
               </div>

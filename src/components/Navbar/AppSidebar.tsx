@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { logout } from "@/redux/slices/userSlice";
 import { Cart } from "./Cart";
+import { logo } from "@/assets";
 
 // Menu items.
 interface AppSidebarProps {
@@ -38,7 +39,7 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({ setAuthType }) => {
         <SidebarGroup className="flex flex-col gap-20">
           <SidebarGroupLabel>
             <div className="w-full mt-10">
-              <img className="w-1/2" src="./logo.png" alt="ElevateEd Logo" />
+              <img className="w-1/2" src={logo} alt="ElevateEd Logo" />
             </div>
           </SidebarGroupLabel>
           <SidebarGroupContent className="">

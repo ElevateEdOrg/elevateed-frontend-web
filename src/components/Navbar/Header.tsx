@@ -8,6 +8,7 @@ import { RootState } from "@/redux/store";
 import { CustomAvatar } from "./CustomAvatar";
 import { AuthStates } from "@/types";
 import { Cart } from "./Cart";
+import { logo } from "@/assets";
 
 interface HeaderProps {
   authType: string | null;
@@ -36,7 +37,7 @@ export const Header: React.FC<HeaderProps> = ({ authType, setAuthType }) => {
   return (
     <nav className="fixed w-screen h-20 z-50 bg-white flex justify-between items-center px-4 md:px-14 xl:px-32 gap-3 md:gap-5 lg:gap-24 border-b">
       <Link to="/" className="flex items-center h-full w-24 md:w-32 xl:w-40">
-        <img className="w-full" src="./logo.png" alt="ElevateEd Logo" />
+        <img className="w-full" src={logo} alt="ElevateEd Logo" />
       </Link>
 
       {/* Search */}

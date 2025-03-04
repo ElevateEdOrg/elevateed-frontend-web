@@ -3,6 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Link } from "react-router";
 import { useDispatch } from "react-redux";
 import { logout } from "@/redux/slices/userSlice";
+import { DefaultProfileImg } from "@/assets";
 
 export const CustomAvatar: React.FC<{ avatar: string }> = ({ avatar }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -15,7 +16,7 @@ export const CustomAvatar: React.FC<{ avatar: string }> = ({ avatar }) => {
       >
         <AvatarImage className="object-cover" src={avatar} />
         <AvatarFallback className="">
-          <img src="./defaultProfile.png" alt="Default Profile Picture" />
+          <img src={DefaultProfileImg} alt="Default Profile Picture" />
         </AvatarFallback>
       </Avatar>
       {isModalOpen && (

@@ -13,9 +13,7 @@ import { useEffect } from "react";
 import { RootState } from "@/redux/store";
 import { API_BASE_URL } from "../../lib/axios";
 
- 
 const socket = io(API_BASE_URL, {
- 
   path: "/api/chat/socket.io/",
 });
 
@@ -33,7 +31,7 @@ export const ChatWindow = () => {
   return (
     <section
       className={
-        "bg-slate-900 rounded-xl fixed right-0 px-4 py-2 m-6 h-[500px] w-80 lg:w-96 text-slate-200 flex flex-col transition-all duration-300 " +
+        "bg-slate-900 rounded-xl fixed z-50 right-0 px-4 py-2 m-6 h-[500px] w-80 lg:w-96 text-slate-200 flex flex-col transition-all duration-300 " +
         (isWidgetOpen ? "bottom-0" : "bottom-[-1000px]")
       }
     >

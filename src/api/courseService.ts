@@ -37,22 +37,21 @@ export interface FetchCategoriesResponse {
 }
 
 export interface FetchUserCoursesResponse {
- data:{
-  id: number;
-  full_name:string;
   data: {
-    EnrolledCourses: Course[];
+    id: number;
+    full_name: string;
+    data: {
+      EnrolledCourses: Course[];
+    };
   };
- }
 }
 
-
 export interface FetchCourseDetailsResponse {
-    course: CourseDetails;
-    totalStudents?: string;
-    averageRating?: string;
-    userRating?:number;
-    userProgress?:number;
+  course: CourseDetails;
+  totalStudents?: string;
+  averageRating?: string;
+  userRating?: number;
+  userProgress?: number;
 }
 
 export interface CourseDetails {
@@ -74,6 +73,13 @@ export interface Lecture {
   pdf_path: string | null;
 }
 
+export interface PaymentResponse {
+  status: number;
+  data: {
+    success: boolean;
+    data: string;
+  };
+}
 
 import { api, handleApiError } from "@/lib/axios";
 import { Course } from "@/types";
@@ -99,13 +105,14 @@ export const fetchAllCategories =
 
 export const fetchUserCourses = async (): Promise<any> => {
   try {
-    const response = await api.post<FetchUserCoursesResponse>("/api/courses/getcourses");
+    const response = await api.post<FetchUserCoursesResponse>(
+      "/api/courses/getcourses"
+    );
     return response;
   } catch (error) {
     return handleApiError(error);
   }
 };
-
 
 export const fetchCourseByQuery = async (
   query: string
@@ -129,9 +136,7 @@ export const fetchUnpaidCourseFromId = async (
   }
 };
 
-export const fetchCourseContent = async (
-  courseId: string
-): Promise<any> => {
+export const fetchCourseContent = async (courseId: string): Promise<any> => {
   try {
     const response = api.get(`/api/courses/content/${courseId}`);
     return response;
@@ -140,4 +145,15 @@ export const fetchCourseContent = async (
   }
 };
 
-
+export const makePayment = async (
+  courseIds: Course["id"][]
+): Promise<PaymentResponse> => {
+  try {
+    const response = api.post("/api/courses/payment/makepayement", {
+      courseIds,
+    });
+    return response;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};

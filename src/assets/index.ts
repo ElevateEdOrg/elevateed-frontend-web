@@ -1,0 +1,9 @@
+export { default as DefaultInstructorImg } from "./instructors/Ins1.jpeg";
+export { default as DefaultCourseBanner1 } from "./courseBanners/banner1.png";
+export { default as DefaultCourseBanner2 } from "./courseBanners/banner2.png";
+export { default as DefaultCourseBanner3 } from "./courseBanners/banner3.png";
+export { default as DefaultCourseBanner4 } from "./courseBanners/banner4.png";
+export { default as DefaultProfileImg } from "./defaultProfile.png";
+export { default as personIcon } from "./personIcon.svg";
+export { default as logo } from "./logo.png";
+export { default as logo_dark } from "./logo_dark.png";

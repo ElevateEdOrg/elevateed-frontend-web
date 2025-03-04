@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router";
 import { FaInstagram, FaFacebookF, FaTwitter } from "react-icons/fa";
 import { dummyCategories } from "@/../db";
+import { logo_dark } from "@/assets";
 
 export const Footer = () => {
   return (
@@ -11,7 +12,7 @@ export const Footer = () => {
           to="/"
           className="flex items-center   h-fit  w-24 md:w-32 xl:w-40"
         >
-          <img className="w-full " src="./logo_dark.png" alt="ElevateEd Logo" />
+          <img className="w-full " src={logo_dark} alt="ElevateEd Logo" />
         </Link>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-10 gap-y-3">
           {dummyCategories.map((category) => (

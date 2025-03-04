@@ -23,7 +23,6 @@ export const MyLearning: React.FC = () => {
       if (!courseId) return;
       try {
         const response = await fetchCourseContent(courseId);
-        console.log("Course Content::", response);
         setCourseContent(response.data.data);
       } catch (error) {
         // Handle 403 error
