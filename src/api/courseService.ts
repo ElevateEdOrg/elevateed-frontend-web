@@ -210,3 +210,15 @@ export const createLecture = async (
     return handleApiError(error);
   }
 };
+
+export const updateCourse = async (
+  courseId: string,
+  course: Partial<Course>
+): Promise<any> => {
+  try {
+    const response = api.put(`/api/courses/update/${courseId}`, course);
+    return response;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};

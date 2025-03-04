@@ -56,14 +56,11 @@ export function CreateCourse() {
   }, []);
 
   return (
-    <section className="px-32 flex items-center justify-center bg-brand-primary">
-      <article className="bg-white pt-24 h-full w-full px-20 py-20 shadow-2xl shadow-gray-600">
-        <h1 className="text-3xl font-semibold mb-6 text-gray-800 mt-10">
-          Create a New Course
-        </h1>
+    <section className="w-full flex items-center justify-center pt-10">
+      <article className="bg-white h-full w-full px-20">
         <form
           onSubmit={handleSubmit}
-          className="bg-gray-100 shadow-2xl border-none"
+          className="bg-gray-100 shadow-2xl border-none rounded-2xl"
         >
           <div className="p-6 space-y-4">
             <Input
