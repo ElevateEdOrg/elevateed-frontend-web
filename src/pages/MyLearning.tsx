@@ -5,6 +5,9 @@ import {
   FetchCourseDetailsResponse,
   Lecture,
 } from "../api/courseService";
+import { StartChatButton } from "@/components";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 export const MyLearning: React.FC = () => {
   const [courseContent, setCourseContent] =
@@ -16,6 +19,8 @@ export const MyLearning: React.FC = () => {
   const { courseId } = useParams();
 
   const tabs = ["Overview", "Q&A", "Notes"];
+
+  const { user } = useSelector((state: RootState) => state);
 
   useEffect(() => {
     const fetchCourse = async () => {
@@ -140,7 +145,7 @@ export const MyLearning: React.FC = () => {
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`px-4 py-3 text-sm font-medium whitespace-nowrap ${
+              className={`px-4 py-3 text-sm font-medium whitespace-nowrap cursor-pointer ${
                 tab === activeTab
                   ? "border-b-2 border-purple-600 text-purple-600"
                   : "text-gray-600"
@@ -149,6 +154,16 @@ export const MyLearning: React.FC = () => {
               {tab}
             </button>
           ))}
+          {user.userInfo.role === "student" && (
+            <div
+              className={`px-4 py-3 text-sm font-medium whitespace-nowrap cursor-pointer`}
+            >
+              <StartChatButton
+                instructorId={courseContent.course.Instructor.id}
+                instructorName={courseContent.course.Instructor.full_name}
+              />
+            </div>
+          )}
         </div>
 
         {/* Course Description */}
