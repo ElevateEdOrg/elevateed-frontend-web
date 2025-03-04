@@ -81,8 +81,20 @@ export interface PaymentResponse {
   };
 }
 
+export interface UploadBannerAndIntroVideoResponse {
+  status: number;
+  data: {
+    message: string;
+    data: {
+      banner_image: string;
+      intro_video: string;
+    };
+  };
+}
+
 import { api, handleApiError } from "@/lib/axios";
 import { Course } from "@/types";
+import axios from "axios";
 
 export const fetchAllCourses = async (): Promise<FetchCoursesResponse> => {
   try {
@@ -152,6 +164,47 @@ export const makePayment = async (
     const response = api.post("/api/courses/payment/makepayement", {
       courseIds,
     });
+    return response;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+export const uploadBannerAndIntroVideo = async (
+  formdata: FormData
+): Promise<UploadBannerAndIntroVideoResponse> => {
+  try {
+    console.log(
+      "formdata",
+      formdata.get("banner_img"),
+      formdata.get("intro_video")
+    );
+    const response = api.post("/api/courses/upload", formdata, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+    return handleApiError(error);
+  }
+};
+
+export const createCourse = async (course: Partial<Course>): Promise<any> => {
+  try {
+    const response = api.post("/api/courses/createcourse", course);
+    return response;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+export const createLecture = async (
+  lecture: Partial<Lecture>
+): Promise<any> => {
+  try {
+    const response = api.post("/api/courses/lectures/createlecture", lecture);
     return response;
   } catch (error) {
     return handleApiError(error);
