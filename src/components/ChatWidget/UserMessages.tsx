@@ -9,7 +9,7 @@ import {
 } from "../../redux/slices/chatSlice";
 import { RootState } from "../../redux/store";
 import { Socket } from "socket.io-client";
-import {API_BASE_URL} from "../../lib/axios"
+import { API_BASE_URL } from "../../lib/axios";
 
 interface UserMessagesProps {
   socket: Socket;

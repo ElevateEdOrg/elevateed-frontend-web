@@ -11,8 +11,7 @@ import { UserChats } from "./UserChats";
 import { UserMessages } from "./UserMessages";
 import { useEffect } from "react";
 import { RootState } from "@/redux/store";
-
-import {API_BASE_URL} from "../../lib/axios"
+import { API_BASE_URL } from "../../lib/axios";
 
 const socket = io(API_BASE_URL, {
   path: "/api/chat/socket.io/",
