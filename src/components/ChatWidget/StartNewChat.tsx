@@ -1,6 +1,6 @@
 // Import Redux hooks
 import { useDispatch, useSelector } from "react-redux";
-import { setOpenChat } from "../../redux/slices/chatSlice";
+import { setIsWidgetOpen, setOpenChat } from "../../redux/slices/chatSlice";
 import React from "react";
 import { RootState } from "@/redux/store";
 
@@ -28,6 +28,7 @@ export const StartChatButton: React.FC<StartChatButtonProps> = ({
         isNewChat: true, // Mark as new chat
       })
     );
+    dispatch(setIsWidgetOpen(true));
     return;
   };
 

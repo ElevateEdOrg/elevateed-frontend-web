@@ -49,24 +49,13 @@ export const SingleCourse = () => {
       {/* Left Section - Course Info */}
       <article className="h-full xl:w-3/7 bg-white-60 rounded-3xl shadow-lg shadow-gray-600 p-6 flex flex-col gap-4">
         <img
-          src={imageUrl}
+          src={course.banner_image || imageUrl}
           alt="hehe"
           className="w-full h-56 object-cover rounded-xl"
         />
-        <h1 className="xl:text-2xl font-semibold">
-          {course.title} Lorem ipsum dolor sit amet consectetur adipisicing
-          elit. Vel voluptates aperiam impedit aspernatur architecto illo
-          recusandae a corporis, provident ullam dicta perspiciatis voluptas
-          odio.
-        </h1>
+        <h1 className="xl:text-2xl font-semibold">{course.title}</h1>
         <p className="text-gray-700 text-sm xl:text-base">
-          {course.description} Lorem ipsum dolor sit amet consectetur
-          adipisicing elit. Minima similique, facere esse numquam itaque
-          blanditiis rerum minus sit asperiores suscipit eum natus officiis enim
-          nostrum soluta perspiciatis commodi dolorem dignissimos, odit earum
-          tenetur! Excepturi accusamus libero ex inventore, sequi accusantium
-          molestias vitae magni nam, necessitatibus non, veritatis officiis
-          autem quibusdam?
+          {course.description}
         </p>
         <div className="flex items-center gap-4">
           <span className="text-gray-500 text-sm">

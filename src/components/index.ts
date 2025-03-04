@@ -17,3 +17,4 @@ export * from "./Dashboard/UpdateProfileForm";
 export * from "./Course/UploadBannerAndIntro";
 export * from "./Course/UploadLectureMedia";
 export * from "./Course/UpdateCourse";
+export * from "./ChatWidget/StartNewChat";
