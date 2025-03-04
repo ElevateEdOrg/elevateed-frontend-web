@@ -47,7 +47,7 @@ export const UserMessages: React.FC<UserMessagesProps> = ({ socket }) => {
     const fetchChatHistory = async () => {
       try {
         const res = await fetch(
-          `http://localhost:8000/api/chat/history/${openChat.id}`
+          `http://192.168.10.49/api/chat/history/${openChat.id}`
         );
         if (res.ok) {
           const data = await res.json();

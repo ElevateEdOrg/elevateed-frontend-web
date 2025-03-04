@@ -17,7 +17,7 @@ export const UserChats = () => {
     // Fetch all chats of userA
     const fetchChats = async () => {
       const res = await fetch(
-        `http://localhost:8000/api/chat/list/${userInfo.id}`
+        `http://192.168.10.49/api/chat/list/${userInfo.id}`
       );
       if (res.status === 500) {
         return;

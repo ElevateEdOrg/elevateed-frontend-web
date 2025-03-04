@@ -12,7 +12,7 @@ import { UserMessages } from "./UserMessages";
 import { useEffect } from "react";
 import { RootState } from "@/redux/store";
 
-const socket = io("http://localhost:8000", {
+const socket = io("http://192.168.10.49", {
   path: "/api/chat/socket.io/",
 });
 
