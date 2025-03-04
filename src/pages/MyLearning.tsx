@@ -40,7 +40,7 @@ export const MyLearning: React.FC = () => {
 
     fetchCourse();
   }, []);
-
+  console.log("state",courseContent)
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);
   };
