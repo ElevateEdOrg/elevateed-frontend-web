@@ -5,6 +5,8 @@ import {
   Profile,
   SingleCourse,
   MyLearning,
+  CreateCourse,
+  CreateLecture,
 } from "@/pages";
 import SearchResults from "./pages/SearchResults";
 function App() {
@@ -18,6 +20,9 @@ function App() {
           {/* Dynamic route for course */}
           <Route path="courses/:courseId" element={<SingleCourse />} />
           <Route path="courses/myLearning/:courseId" element={<MyLearning />} />
+          <Route path="courses/create" element={<CreateCourse />} />
+          <Route path="lectures/create/:courseId" element={<CreateLecture />} />
+
           <Route path="*" element={<h1>Not Found</h1>} />
         </Route>
       </Routes>
