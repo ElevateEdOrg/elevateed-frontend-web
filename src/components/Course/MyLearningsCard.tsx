@@ -48,15 +48,15 @@ export const MyLearningsCard: React.FC<MylearningCardProps> = ({
         {course.description && (
           <p className="line-clamp-3 tracking-wide">{course.description}</p>
         )}
-        <div className="mt-4">
-          <p className="text-sm">Progress: {course.Enrollment.progress}%</p>
+        {course.Enrollment?.progress && <div className="mt-4">
+          <p className="text-sm">Progress: {course.Enrollment?.progress}%</p>
           <div className="w-full h-2 bg-gray-300 rounded-full">
             <div
               className="h-2 bg-brand-primary rounded-full "
-              style={{ width: `${course.Enrollment.progress}%` }}
+              style={{ width: `${course.Enrollment?.progress}%` }}
             ></div>
           </div>
-        </div>
+        </div>}
       </div>
     </article>
   );
