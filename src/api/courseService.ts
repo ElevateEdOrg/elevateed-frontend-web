@@ -37,13 +37,43 @@ export interface FetchCategoriesResponse {
 }
 
 export interface FetchUserCoursesResponse {
-  status: number;
+ data:{
+  id: number;
+  full_name:string;
   data: {
-    data: {
-      EnrolledCourses: Course[];
-    };
+    EnrolledCourses: Course[];
   };
+ }
 }
+
+
+export interface FetchCourseDetailsResponse {
+    course: CourseDetails;
+    totalStudents?: string;
+    averageRating?: string;
+    userRating?:number;
+    userProgress?:number;
+}
+
+export interface CourseDetails {
+  id: string;
+  title: string;
+  description: string;
+  price: string;
+  banner_image: string | null;
+  welcome_msg: string;
+  intro_video: string | null;
+  Lectures: Lecture[];
+}
+
+export interface Lecture {
+  id: string;
+  title: string;
+  description: string;
+  video_path: string | null;
+  pdf_path: string | null;
+}
+
 
 import { api, handleApiError } from "@/lib/axios";
 import { Course } from "@/types";
@@ -67,14 +97,15 @@ export const fetchAllCategories =
     }
   };
 
-export const fetchUserCourses = async (): Promise<FetchUserCoursesResponse> => {
+export const fetchUserCourses = async (): Promise<any> => {
   try {
-    const response = api.post("/api/courses/getcourses");
+    const response = await api.post<FetchUserCoursesResponse>("/api/courses/getcourses");
     return response;
   } catch (error) {
     return handleApiError(error);
   }
 };
+
 
 export const fetchCourseByQuery = async (
   query: string
@@ -97,3 +128,16 @@ export const fetchUnpaidCourseFromId = async (
     return handleApiError(error);
   }
 };
+
+export const fetchCourseContent = async (
+  courseId: string
+): Promise<any> => {
+  try {
+    const response = api.get(`/api/courses/content/${courseId}`);
+    return response;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+

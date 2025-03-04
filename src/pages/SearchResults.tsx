@@ -76,7 +76,7 @@ const SearchResults: React.FC = () => {
 
     // Rating Filter
     if (ratingFilter > 0) {
-      courses = courses.filter((course) => course.avg_rating >= ratingFilter);
+      courses = courses.filter((course) => course.avg_rating>= ratingFilter);
     }
 
     // Category Filter

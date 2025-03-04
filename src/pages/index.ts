@@ -4,3 +4,4 @@ export * from "../components/Navbar/Header";
 export * from "./Profile";
 export * from "./SearchResults";
 export * from "./SingleCourse";
+export * from "./MyLearning"

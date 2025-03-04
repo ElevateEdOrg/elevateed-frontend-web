@@ -9,6 +9,7 @@ import {
 } from "../../redux/slices/chatSlice";
 import { RootState } from "../../redux/store";
 import { Socket } from "socket.io-client";
+import { API_BASE_URL } from "../../lib/axios";
 
 interface UserMessagesProps {
   socket: Socket;
@@ -47,7 +48,9 @@ export const UserMessages: React.FC<UserMessagesProps> = ({ socket }) => {
     const fetchChatHistory = async () => {
       try {
         const res = await fetch(
-          `http://192.168.10.49/api/chat/history/${openChat.id}`
+ 
+          `${API_BASE_URL}/api/chat/history/${openChat.id}`
+ 
         );
         if (res.ok) {
           const data = await res.json();
