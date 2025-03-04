@@ -1,84 +1,54 @@
-import { useSelector, useDispatch } from "react-redux";
-import { login } from "@/redux/slices/userSlice";
+import { useSelector } from "react-redux";
 import {
   BrowseCourses,
   CourseCard,
   HeroBanner,
   PopularInstructors,
   RecommendedCourses,
-  StartChatButton,
 } from "@/components";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { RootState } from "@/redux/store";
-import { Button } from "@/components/ui/button";
-import { dummyCourse } from "@/../db";
+import { fetchUserCourses } from "@/api/courseService";
+import { Course } from "@/types";
+import { MyLearningsCard } from "@/components/Course/MyLearningsCard";
 
 export const Homepage: React.FC = () => {
   const state = useSelector((state: RootState) => state);
-  const dispatch = useDispatch();
+  const [userCourses, setUserCourses] = useState<Course[]>([]);
 
-  const foo = () => {
-    console.log(state);
-  };
+  useEffect(() => {
+    if (state.user.userInfo.role !== "student") {
+      return;
+    }
 
-  const addStudentUserToState = () => {
-    dispatch(
-      login({
-        id: "04b8bbab-e20f-4b6e-9020-e8c51dad9a43",
-        full_name: "Yash Solanki",
-        email: "thisisyashs@gmail.com",
-        role: "student",
-      })
-    );
-    console.log("User state updated to student");
-  };
-
-  const addInstructorUserToState = () => {
-    dispatch(
-      login({
-        id: "37a8f2de-3df3-4d13-a32c-0ea0c64de833",
-        full_name: "jhanvi",
-        email: "jhanvi.2302@gmail.com",
-        role: "instructor",
-      })
-    );
-    console.log("User state updated to instructor");
-  };
+    const fetchUserEnrolledCourses = async () => {
+      try {
+        const response = await fetchUserCourses();
+        console.log("response", response);
+        setUserCourses(response.data.data.EnrolledCourses);
+      } catch (error) {
+        console.log("Error fetching Courses", error);
+      }
+    };
+    fetchUserEnrolledCourses();
+  }, []);
 
   return (
     <section className="w-screen pt-24 px-4 xl:px-32 overflow-x-hidden">
       <article className="flex flex-col items-center w-full pb-10 ">
         <HeroBanner />
       </article>
-      <article className="py-4">
-        <h2 className="text-2xl font-bold border-b pb-4 ">Continue Watching</h2>
-        <CourseCard course={dummyCourse} className="pt-4" />
-      </article>
+      {state.user.userInfo.role === "student" && userCourses.length > 0 && (
+        <article className="py-4">
+          <h2 className="text-2xl font-bold border-b pb-4 ">
+            Continue Watching
+          </h2>
+          <MyLearningsCard course={userCourses[0]} className="pt-4" />
+        </article>
+      )}
       <BrowseCourses />
       <RecommendedCourses />
       <PopularInstructors />
     </section>
-    // <div className="flex flex-col gap-10">
-    //   Homepage
-    //   <Button className="bg-brand-primary" onClick={foo}>
-    //     Click me
-    //   </Button>
-    //   <button onClick={addStudentUserToState} className=" py-4">
-    //     User state: Student
-    //   </button>
-    //   <button onClick={addInstructorUserToState} className=" py-4">
-    //     User state: Jhanvi instructor
-    //   </button>
-    //   {/* <Button>Send Message to Jhanvi</Button> */}
-    //   <StartChatButton
-    //     instructorId="37a8f2de-3df3-4d13-a32c-0ea0c64de833"
-    //     instructorName="jhanvi"
-    //   />
-    //   <StartChatButton
-    //     instructorId="54873533-4cce-4aa0-ab31-665a4fc5e788"
-    //     instructorName="Modi"
-    //   />
-    //   <button>Send Message to Modi</button>
-    // </div>
   );
 };

@@ -3,29 +3,10 @@ import { FaRupeeSign } from "react-icons/fa";
 import { Course } from "../../types/index";
 import { cn } from "@/lib/utils";
 import { useNavigate } from "react-router";
-import { FetchUserCoursesResponse } from "@/api/courseService";
 import { DefaultCourseBanner1, personIcon } from "@/assets";
-// const dummyCourse: Partial<Course> = {
-//   banner_image: "./src/assets/courseBanners/banner3.png",
-//   title: "Vue JS crash course",
-//   Instructor: {
-//     id: "37a8f2de-3df3-4d13-a32c-0ea0c64de833",
-//     email: "akelnfladknf@klnaldkfn.ad",
-//     full_name: "Kitani Studio",
-//   },
-//   description:
-//     "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat numquam vitae error odio velit. Corporis reiciendis eius non blanditiis officia veniam! Consequuntur asperiores, eos doloribus ullam, dolore voluptatibus molestiae omnis minima facere quod aliquam exercitationem ratione quos adipisci architecto quae non id atque sequi! Numquam, provident excepturi! Rerum, quas hic!",
-//   price: 79.09,
-//   Category: {
-//     id: "37a8f2de-3df3-4d13-a32c-0ea0c64de833",
-//     name: "Frontend",
-//   },
-//   created_at: "2021-09-09",
-//   id: "oirjoieofn1o2nro2nfo23knro2fkn3ont",
-// };
 
 interface CourseCardProps {
-  course: Course;
+  course: Partial<Course>;
   className?: string;
 }
 
