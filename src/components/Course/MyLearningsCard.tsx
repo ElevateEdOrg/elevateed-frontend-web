@@ -3,9 +3,7 @@ import { FaRupeeSign } from "react-icons/fa";
 import { Course } from "../../types/index";
 import { cn } from "@/lib/utils";
 import { useNavigate } from "react-router";
-import {
-  FetchUserCoursesResponse,
-} from "@/api/courseService";
+import { FetchUserCoursesResponse } from "@/api/courseService";
 // const dummyCourse: Partial<Course> = {
 //   banner_image: "./src/assets/courseBanners/banner3.png",
 //   title: "Vue JS crash course",
@@ -34,8 +32,6 @@ export const MyLearningsCard: React.FC<MylearningCardProps> = ({
   course,
   className = "",
 }) => {
-
-  
   const navigate = useNavigate();
   return (
     <article
