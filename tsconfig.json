@@ -16,6 +16,7 @@
     "jsx": "react-jsx",
     "allowJs": false, // Make sure TypeScript enforces .ts/.tsx
     "baseUrl": ".",
+    "outDir": "./dist",
     "paths": {
       "@/*": ["./src/*"]
     }
