@@ -3,9 +3,10 @@ import { IoMdCart, IoMdClose } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "../ui/button";
 import { useState } from "react";
-import DefaultImg from "@/assets/courseBanners/banner1.png";
 import { FaRupeeSign } from "react-icons/fa";
 import { clearCart, removeFromCart } from "@/redux/slices/cartSlice";
+import { makePayment } from "@/api/courseService";
+import { DefaultCourseBanner1 } from "@/assets";
 
 export const Cart = () => {
   const state = useSelector((state: RootState) => state);
@@ -16,6 +17,19 @@ export const Cart = () => {
 
   const handleClick = () => {
     setModal(true);
+  };
+
+  const handlePayment = async () => {
+    const courseIdArray = cart.courses.map((course) => course.id);
+    console.log("Clicked:", courseIdArray);
+    try {
+      const response = await makePayment(courseIdArray);
+      console.log(response);
+      // Redirect to response.data.data
+      window.location.href = response.data.data;
+    } catch (error) {
+      console.log("Error processing payment...", error);
+    }
   };
 
   return (
@@ -46,16 +60,12 @@ export const Cart = () => {
                     key={course.id}
                   >
                     <div className="h-full xl:w-1/5">
-                      <img src={DefaultImg} alt="" />
+                      <img src={DefaultCourseBanner1} alt="" />
                     </div>
                     <div className="h-full xl:w-3/5">
                       <h1 className="font-bold">{course.title}</h1>
                       <p className="text-sm line-clamp-3">
-                        {course.description} Lorem ipsum dolor sit amet
-                        consectetur adipisicing elit. Dignissimos consequatur
-                        libero sequi autem, doloremque rem veritatis atque
-                        rerum, aliquam exercitationem recusandae odio vero unde
-                        hic in asperiores officiis dolores consectetur!
+                        {course.description}
                       </p>
                     </div>
                     <div className="h-full xl:w-1/5 relative">
@@ -81,7 +91,10 @@ export const Cart = () => {
               >
                 Clear Cart
               </button>
-              <button className="bg-brand-primary  text-xs whitespace-nowrap text-white px-4 py-2 rounded-full cursor-pointer">
+              <button
+                onClick={handlePayment}
+                className="bg-brand-primary  text-xs whitespace-nowrap text-white px-4 py-2 rounded-full cursor-pointer"
+              >
                 Purchase these courses
               </button>
             </div>

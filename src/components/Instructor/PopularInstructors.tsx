@@ -1,3 +1,4 @@
+import { DefaultInstructorImg } from "@/assets";
 import React from "react";
 
 export const PopularInstructors = () => {
@@ -21,7 +22,7 @@ export const PopularInstructors = () => {
               <p>Average rating - 4.7 ⭐</p>
             </div>
           </div>
-          <img src="./src/assets/instructors/Ins1.jpeg" alt="" />
+          <img src={DefaultInstructorImg} alt="" />
         </div>
         <div className="rounded-3xl overflow-hidden relative group">
           <div className="absolute flex items-end top-[1000px] group-hover:top-0 left-0 bg-linear-to-b from-transparent to-black-90 w-full h-full transition-all duration-300">
@@ -34,7 +35,7 @@ export const PopularInstructors = () => {
               <p>Average rating - 4.7 ⭐</p>
             </div>
           </div>
-          <img src="./src/assets/instructors/Ins1.jpeg" alt="" />
+          <img src={DefaultInstructorImg} alt="" />
         </div>
         <div className="rounded-3xl overflow-hidden relative group">
           <div className="absolute flex items-end top-[1000px] group-hover:top-0 left-0 bg-linear-to-b from-transparent to-black-90 w-full h-full transition-all duration-300">
@@ -47,7 +48,7 @@ export const PopularInstructors = () => {
               <p>Average rating - 4.7 ⭐</p>
             </div>
           </div>
-          <img src="./src/assets/instructors/Ins1.jpeg" alt="" />
+          <img src={DefaultInstructorImg} alt="" />
         </div>
         <div className="rounded-3xl overflow-hidden relative group">
           <div className="absolute flex items-end top-[1000px] group-hover:top-0 left-0 bg-linear-to-b from-transparent to-black-90 w-full h-full transition-all duration-300">
@@ -60,7 +61,7 @@ export const PopularInstructors = () => {
               <p>Average rating - 4.7 ⭐</p>
             </div>
           </div>
-          <img src="./src/assets/instructors/Ins1.jpeg" alt="" />
+          <img src={DefaultInstructorImg} alt="" />
         </div>
       </div>
     </article>

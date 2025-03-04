@@ -4,6 +4,7 @@ import { Course } from "../../types/index";
 import { cn } from "@/lib/utils";
 import { useNavigate } from "react-router";
 import { FetchUserCoursesResponse } from "@/api/courseService";
+import { DefaultCourseBanner1, personIcon } from "@/assets";
 // const dummyCourse: Partial<Course> = {
 //   banner_image: "./src/assets/courseBanners/banner3.png",
 //   title: "Vue JS crash course",
@@ -45,7 +46,7 @@ export const MyLearningsCard: React.FC<MylearningCardProps> = ({
       <div className="w-full aspect-video rounded-4xl group-hover:shadow-md group-hover:shadow-gray-700 transition-all duration-200 overflow-hidden">
         <img
           className="w-full h-full"
-          src={course.banner_image || "./src/assets/courseBanners/banner1.png"}
+          src={course.banner_image || DefaultCourseBanner1}
           alt={`Banner Image of ${course.title}`}
           draggable={false}
         />
@@ -56,7 +57,7 @@ export const MyLearningsCard: React.FC<MylearningCardProps> = ({
         </h3>
         <div className="flex justify-between">
           <div className="flex gap-2 px-1">
-            <img src="/personIcon.svg" alt="" />
+            <img src={personIcon} alt="" />
             <p className="text-sm text-brand-primary">
               {course.Instructor?.full_name}
             </p>

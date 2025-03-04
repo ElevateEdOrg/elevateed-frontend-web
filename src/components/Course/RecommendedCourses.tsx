@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { CourseCard } from "./CourseCard";
 import { dummyCourses } from "@/../db";
 import { FaChevronDown, FaRupeeSign } from "react-icons/fa";
+import { DefaultCourseBanner1, personIcon } from "@/assets";
 
 export const RecommendedCourses = () => {
   return (
@@ -15,10 +16,7 @@ export const RecommendedCourses = () => {
           <div className="w-full aspect-video rounded-4xl overflow-hidden">
             <img
               className="w-full h-full"
-              src={
-                dummyCourses[0].banner_image ||
-                "./src/assets/courseBanners/banner1.png"
-              }
+              src={dummyCourses[0].banner_image || DefaultCourseBanner1}
               alt={`Banner Image of ${dummyCourses[0].title}`}
               draggable={false}
             />
@@ -29,7 +27,7 @@ export const RecommendedCourses = () => {
             </h3>
             <div className="flex justify-between">
               <div className="flex gap-2 px-1">
-                <img src="/personIcon.svg" alt="" />
+                <img src={personIcon} alt="" />
                 <p className="text-sm text-brand-primary">
                   {dummyCourses[0].Instructor?.full_name}
                 </p>
