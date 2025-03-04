@@ -13,6 +13,21 @@
 //   }
 // };
 
+
+export interface Instructors  {
+  id: string;
+  full_name: string;
+  email: string;
+  avatar: string | null;
+  total_enrollments: number;
+  total_courses: number;
+};
+
+export interface FtechTopInstructors {
+  data:Instructors
+}
+
+
 export interface FetchCoursesResponse {
   status: number;
   data: {
@@ -217,6 +232,16 @@ export const updateCourse = async (
 ): Promise<any> => {
   try {
     const response = api.put(`/api/courses/update/${courseId}`, course);
+    return response;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+
+export const fetchTopInstructors = async (): Promise<any> => {
+  try {
+    const response = api.get(`/api/courses/topinstructors`);
     return response;
   } catch (error) {
     return handleApiError(error);
