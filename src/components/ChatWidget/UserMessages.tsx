@@ -48,7 +48,9 @@ export const UserMessages: React.FC<UserMessagesProps> = ({ socket }) => {
     const fetchChatHistory = async () => {
       try {
         const res = await fetch(
+ 
           `${API_BASE_URL}/api/chat/history/${openChat.id}`
+ 
         );
         if (res.ok) {
           const data = await res.json();

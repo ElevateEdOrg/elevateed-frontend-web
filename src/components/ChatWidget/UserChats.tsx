@@ -17,7 +17,9 @@ export const UserChats = () => {
   useEffect(() => {
     // Fetch all chats of userA
     const fetchChats = async () => {
+ 
       const res = await fetch(`${API_BASE_URL}/api/chat/list/${userInfo.id}`);
+ 
       if (res.status === 500) {
         return;
       }
