@@ -222,3 +222,14 @@ export const updateCourse = async (
     return handleApiError(error);
   }
 };
+
+export const updateLectureStatus = async (lectureId: string): Promise<any> => {
+  try {
+    const response = api.post(
+      `/api/courses/lectures/updatestatus/${lectureId}`
+    );
+    return response;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
