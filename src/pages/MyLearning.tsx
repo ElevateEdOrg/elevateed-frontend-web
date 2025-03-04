@@ -4,6 +4,7 @@ import {
   fetchCourseContent,
   FetchCourseDetailsResponse,
   Lecture,
+  updateLectureStatus,
 } from "../api/courseService";
 import { StartChatButton } from "@/components";
 import { useSelector } from "react-redux";
@@ -42,6 +43,20 @@ export const MyLearning: React.FC = () => {
 
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);
+  };
+
+  const videoEnded = async () => {
+    if (selectedLecture) {
+      console.log("Video Ended. Lecture ID:", selectedLecture.id);
+      try {
+        const response = await updateLectureStatus(selectedLecture.id);
+        console.log("Lecture Status Updated:", response);
+      } catch (error) {
+        console.error("Error updating lecture status:", error);
+      }
+    } else {
+      console.error("No selected lecture found.");
+    }
   };
 
   if (loading)
@@ -84,6 +99,7 @@ export const MyLearning: React.FC = () => {
               }
               poster={courseContent?.course.banner_image || ""}
               controls
+              onEnded={videoEnded}
             />
           </div>
         </div>
