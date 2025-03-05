@@ -39,37 +39,47 @@ export function Profile() {
         >
           Profile
         </button>
-        <button
-          onClick={() => setSelectedTab(3)}
-          className={`cursor-pointer transition-all duration-100 px-4 py-2 ${
-            selectedTab === 3 ? "border-b" : ""
-          }`}
-        >
-          Create Course
-        </button>
-        <button
-          onClick={() => setSelectedTab(4)}
-          className={`cursor-pointer transition-all duration-100 px-4 py-2 ${
-            selectedTab === 4 ? "border-b" : ""
-          }`}
-        >
-          Add lecture
-        </button>
-        <button
-          onClick={() => setSelectedTab(5)}
-          className={`cursor-pointer transition-all duration-100 px-4 py-2 ${
-            selectedTab === 5 ? "border-b" : ""
-          }`}
-        >
-          Update Course
-        </button>
+        {user.userInfo.role === "instructor" && (
+          <>
+            <button
+              onClick={() => setSelectedTab(3)}
+              className={`cursor-pointer transition-all duration-100 px-4 py-2 ${
+                selectedTab === 3 ? "border-b" : ""
+              }`}
+            >
+              Create Course
+            </button>
+            <button
+              onClick={() => setSelectedTab(4)}
+              className={`cursor-pointer transition-all duration-100 px-4 py-2 ${
+                selectedTab === 4 ? "border-b" : ""
+              }`}
+            >
+              Add lecture
+            </button>
+            <button
+              onClick={() => setSelectedTab(5)}
+              className={`cursor-pointer transition-all duration-100 px-4 py-2 ${
+                selectedTab === 5 ? "border-b" : ""
+              }`}
+            >
+              Update Course
+            </button>
+          </>
+        )}
       </article>
       {/* Tab content */}
       {selectedTab === 1 && <MyCourses />}
       {selectedTab === 2 && <UpdateProfileForm />}
-      {selectedTab === 3 && <CreateCourse />}
-      {selectedTab === 4 && <CreateLecture />}
-      {selectedTab === 5 && <UpdateCourse />}
+      {user.userInfo.role === "instructor" && selectedTab === 3 && (
+        <CreateCourse />
+      )}
+      {user.userInfo.role === "instructor" && selectedTab === 4 && (
+        <CreateLecture />
+      )}
+      {user.userInfo.role === "instructor" && selectedTab === 5 && (
+        <UpdateCourse />
+      )}
     </section>
   );
 }
