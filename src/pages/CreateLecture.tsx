@@ -5,6 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { UploadLectureMedia } from "@/components";
 import { createLecture, fetchUserCourses } from "@/api/courseService";
 import { Course } from "@/types";
+import { toast } from "react-toastify";
 
 export function CreateLecture() {
   const [lecture, setLecture] = useState({
@@ -35,7 +36,7 @@ export function CreateLecture() {
       const response = await createLecture(lecture);
       if (response.status === 201) {
         console.log("Lecture created successfully", response.data);
-        alert("Lecture created successfully");
+        toast.success("Lecture created successfully");
         setLecture({
           course_id: "",
           title: "",

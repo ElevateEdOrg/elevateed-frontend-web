@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { FaChevronDown } from "react-icons/fa";
 import { IoMdArrowRoundBack } from "react-icons/io";
+import { toast } from "react-toastify";
 
 export const MyLearning: React.FC = () => {
   const [courseContent, setCourseContent] =
@@ -69,15 +70,14 @@ export const MyLearning: React.FC = () => {
 
   const handleQuizOpen = () => {
     if (!courseContent?.userProgress) {
-      alert("You need to watch the course to take the quiz");
+      toast.info("You need to watch the course to take the quiz");
       return;
     }
 
-    // if (courseContent?.userProgress < 80) {
-    //   alert("You need to watch 80% of the course to take the quiz");
-    //   return;
-    // }
-    alert("Hurray");
+    if (courseContent?.userProgress < 80) {
+      toast.info("You need to complete 80% of the course to take the quiz");
+      return;
+    }
     setIsQuizOpen(true);
   };
 

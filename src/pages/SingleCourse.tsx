@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { addToCart } from "@/redux/slices/cartSlice";
 import { setAuthState } from "@/redux/slices/userSlice";
+import { toast } from "react-toastify";
 export const SingleCourse = () => {
   const [course, setCourse] = useState<Course | null>(null);
   const { courseId } = useParams();
@@ -37,7 +38,7 @@ export const SingleCourse = () => {
   const handleAddToCart = () => {
     if (!course) return;
     dispatch(addToCart(course));
-    alert("Course added to cart!");
+    toast.success("Course added to cart");
   };
 
   if (!course) return <section className="pt-24">Loading...</section>;
@@ -76,7 +77,11 @@ export const SingleCourse = () => {
           <video
             className="w-full rounded-3xl"
             controls
-            src={course.intro_video || "https://elevateed.s3.us-east-1.amazonaws.com/uploads/videos/1740399995689-wild_butterfly_in_nature_6891914.mp4"}></video>
+            src={
+              course.intro_video ||
+              "https://elevateed.s3.us-east-1.amazonaws.com/uploads/videos/1740399995689-wild_butterfly_in_nature_6891914.mp4"
+            }
+          ></video>
         </div>
         <div className="px-4">
           <h3 className="text-xl xl:text-3xl">Get this course for </h3>
