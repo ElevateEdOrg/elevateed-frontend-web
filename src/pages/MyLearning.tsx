@@ -6,7 +6,7 @@ import {
   Lecture,
   updateLectureStatus,
 } from "../api/courseService";
-import { Quiz, StartChatButton } from "@/components";
+import { Loader, Quiz, StartChatButton } from "@/components";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { FaChevronDown } from "react-icons/fa";
@@ -74,18 +74,18 @@ export const MyLearning: React.FC = () => {
       return;
     }
 
-    if (courseContent?.userProgress < 80) {
-      toast.info("You need to complete 80% of the course to take the quiz");
-      return;
-    }
+    // if (courseContent?.userProgress < 80) {
+    //   toast.info("You need to complete 80% of the course to take the quiz");
+    //   return;
+    // }
     setIsQuizOpen(true);
   };
 
   if (loading)
     return (
-      <h1 className="pt-24 h-screen flex justify-center items-center text-4xl">
-        Loading...
-      </h1>
+      <div className="w-full h-screen flex justify-center items-center">
+        <Loader />
+      </div>
     );
 
   if (!courseContent) {
@@ -141,7 +141,7 @@ export const MyLearning: React.FC = () => {
                 src={
                   selectedLecture?.video_path ||
                   courseContent?.course.intro_video ||
-                  ""
+                  "https://elevateed.s3.us-east-1.amazonaws.com/uploads/videos/1741088378964-wild_butterfly_in_nature_6891914.mp4"
                 }
                 poster={courseContent?.course.banner_image || ""}
                 controls
@@ -200,7 +200,12 @@ export const MyLearning: React.FC = () => {
                 onClick={() => setSelectedLecture(lecture)}
               >
                 {/* lecture Header (Click to Toggle) */}
-                <div className="px-6 py-4 bg-gray-100 hover:bg-gray-200 rounded-xl flex justify-between items-center cursor-pointer transition-all duration-300">
+                <div
+                  className={
+                    "px-6 py-4 bg-gray-100 hover:bg-gray-200 rounded-xl flex justify-between items-center cursor-pointer transition-all duration-300 " +
+                    (selectedLecture?.id === lecture.id ? "bg-gray-200" : "")
+                  }
+                >
                   <span className="font-medium">{lecture.title}</span>
                 </div>
               </div>

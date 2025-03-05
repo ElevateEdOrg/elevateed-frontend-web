@@ -3,6 +3,7 @@ import { login } from "@/redux/slices/userSlice";
 import { RootState } from "@/redux/store";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Loader } from "../Loader";
 
 export const UpdateProfileForm = () => {
   const state = useSelector((state: RootState) => state);
@@ -107,7 +108,7 @@ export const UpdateProfileForm = () => {
           disabled={isDisabled || loading}
           onClick={handleSaveChanges}
         >
-          Save Changes
+          {loading ? <Loader /> : "Save Changes"}
         </button>
       </form>
     </article>

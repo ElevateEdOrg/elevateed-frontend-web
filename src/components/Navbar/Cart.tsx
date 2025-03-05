@@ -7,11 +7,13 @@ import { FaRupeeSign } from "react-icons/fa";
 import { clearCart, removeFromCart } from "@/redux/slices/cartSlice";
 import { makePayment } from "@/api/courseService";
 import { DefaultCourseBanner1 } from "@/assets";
+import { Loader } from "../Loader";
 
 export const Cart = () => {
   const state = useSelector((state: RootState) => state);
   const cart = state.cart;
   const [modal, setModal] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -20,6 +22,7 @@ export const Cart = () => {
   };
 
   const handlePayment = async () => {
+    setLoading(true);
     const courseIdArray = cart.courses.map((course) => course.id);
     console.log("Clicked:", courseIdArray);
     try {
@@ -29,6 +32,8 @@ export const Cart = () => {
       window.location.href = response.data.data;
     } catch (error) {
       console.log("Error processing payment...", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -60,7 +65,10 @@ export const Cart = () => {
                     key={course.id}
                   >
                     <div className="h-full xl:w-1/5">
-                      <img src={course.banner_image||DefaultCourseBanner1} alt="" />
+                      <img
+                        src={course.banner_image || DefaultCourseBanner1}
+                        alt=""
+                      />
                     </div>
                     <div className="h-full xl:w-3/5">
                       <h1 className="font-bold">{course.title}</h1>
@@ -95,7 +103,7 @@ export const Cart = () => {
                 onClick={handlePayment}
                 className="bg-brand-primary  text-xs whitespace-nowrap text-white px-4 py-2 rounded-full cursor-pointer"
               >
-                Purchase these courses
+                {loading ? <Loader /> : "Purchase these courses"}
               </button>
             </div>
           </article>

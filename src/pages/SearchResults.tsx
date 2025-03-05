@@ -6,7 +6,7 @@ import {
   fetchCourseByQuery,
 } from "@/api/courseService";
 import { Course } from "@/types";
-import { CourseCard } from "@/components";
+import { CourseCard, Loader } from "@/components";
 import { IoMdClose } from "react-icons/io";
 import { FaChevronRight } from "react-icons/fa";
 
@@ -76,7 +76,7 @@ const SearchResults: React.FC = () => {
 
     // Rating Filter
     if (ratingFilter > 0) {
-      courses = courses.filter((course) => course.avg_rating>= ratingFilter);
+      courses = courses.filter((course) => course.avg_rating >= ratingFilter);
     }
 
     // Category Filter
@@ -237,7 +237,9 @@ const SearchResults: React.FC = () => {
         </h1>
 
         {loading ? (
-          <p>Loading courses...</p>
+          <div className="w-full h-96 flex justify-center items-center">
+            <Loader />
+          </div>
         ) : filteredCourses.length > 0 ? (
           <div className="flex flex-wrap justify-around gap-6">
             {filteredCourses.map((course) => (

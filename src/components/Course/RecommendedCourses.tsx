@@ -11,6 +11,7 @@ import {
 import { Course } from "@/types";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import { Loader } from "../Loader";
 export const RecommendedCourses = () => {
   const [loading, setLoading] = useState(false);
   const [recommendedCourses, setRecommendedCourses] = useState<Course[] | null>(
@@ -60,9 +61,9 @@ export const RecommendedCourses = () => {
 
   if (!recommendedCourses || loading) {
     return (
-      <h1 className="pt-24 h-screen flex justify-center items-center text-4xl">
-        Loading...
-      </h1>
+      <div className="flex justify-center items-center h-[500px]">
+        <Loader />
+      </div>
     );
   }
   return (

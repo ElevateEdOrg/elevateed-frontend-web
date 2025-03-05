@@ -7,3 +7,4 @@ export { default as DefaultProfileImg } from "./defaultProfile.png";
 export { default as personIcon } from "./personIcon.svg";
 export { default as logo } from "./logo.png";
 export { default as logo_dark } from "./logo_dark.png";
+export { default as loader } from "./loader.png";
