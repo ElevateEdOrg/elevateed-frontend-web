@@ -9,6 +9,7 @@ import {
   updateCourse,
 } from "@/api/courseService";
 import { Course } from "@/types";
+import { toast } from "react-toastify";
 
 export function UpdateCourse() {
   const [course, setCourse] = useState({
@@ -80,7 +81,7 @@ export function UpdateCourse() {
       const response = await updateCourse(selectedCourseId, course);
       console.log("response", response);
       if (response.status === 200) {
-        alert("Course updated successfully");
+        toast.success("Course updated successfully");
       }
     } catch (error) {
       console.log("Error updating course", error);

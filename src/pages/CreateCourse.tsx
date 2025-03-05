@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { UploadBannerAndIntro } from "@/components";
 import { createCourse, fetchAllCategories } from "@/api/courseService";
+import { toast } from "react-toastify";
 
 export function CreateCourse() {
   const [course, setCourse] = useState({
@@ -40,7 +41,7 @@ export function CreateCourse() {
     try {
       const response = await createCourse(course);
       if (response.status === 201) {
-        alert("Course created successfully");
+        toast.success("Course created successfully");
       }
     } catch (error) {
       console.log("Error creating course", error);

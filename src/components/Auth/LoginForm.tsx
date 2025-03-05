@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { login } from "@/redux/slices/userSlice";
 import { AuthUserResponse, loginUser } from "@/api/authService";
 import { AxiosError } from "axios";
+import { toast } from "react-toastify";
 
 interface LoginFormProps {
   authType: AuthStates | null;
@@ -46,8 +47,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
       const user = data.user;
       dispatch(login(user));
       if (res.data.status === "success") {
-        alert("Login successful");
-        // Set data.access_token to localStorage
+        toast.success("Login Successful");
         localStorage.setItem("access_token", data.access_token!);
         setFormData(initialState);
         setLoading(false);

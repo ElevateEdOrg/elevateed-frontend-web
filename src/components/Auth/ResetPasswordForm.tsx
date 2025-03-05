@@ -9,6 +9,7 @@ import React, { useState } from "react";
 import { CustomInputOTP } from "./InputOTP";
 import { FaArrowRight } from "react-icons/fa";
 import { PasswordInput } from "./PasswordInput";
+import { toast } from "react-toastify";
 interface ResetPasswordFormProps {
   authType: AuthStates | null;
   setAuthType: React.Dispatch<React.SetStateAction<AuthStates | null>>;
@@ -32,7 +33,7 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
     try {
       const res: AuthUserResponse = await forgotPassword(email);
       if (res.status === 200) {
-        alert("OTP sent to your mail");
+        toast.info("OTP sent to your email");
         setAuthType("otp");
       } else {
         throw new Error(res.data.message);
@@ -64,7 +65,7 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
       if (res.status !== 200) {
         throw new Error(res.data.message);
       }
-      alert("Password changed successfully");
+      toast.success("Password changed successfully");
       setAuthType("login");
     } catch (error) {
       const errorMessage =
