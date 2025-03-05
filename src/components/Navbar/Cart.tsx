@@ -60,7 +60,7 @@ export const Cart = () => {
                     key={course.id}
                   >
                     <div className="h-full xl:w-1/5">
-                      <img src={DefaultCourseBanner1} alt="" />
+                      <img src={course.banner_image||DefaultCourseBanner1} alt="" />
                     </div>
                     <div className="h-full xl:w-3/5">
                       <h1 className="font-bold">{course.title}</h1>
