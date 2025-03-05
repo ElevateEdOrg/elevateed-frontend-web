@@ -1,15 +1,19 @@
 import React, { useRef, useState, useEffect } from "react";
 import { CourseCard } from "./CourseCard";
-import { recommendedCourses } from "@/../db";
+import { dummyCourses } from "@/../db";
 import { FaChevronDown, FaRupeeSign } from "react-icons/fa";
 import { DefaultCourseBanner1, personIcon } from "@/assets";
 import {fetchRecommendedCourses,FetchCoursesResponse} from "../../api/courseService"
+
 import { Course } from "@/types";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 export const RecommendedCourses = () => {   
-      const [loading, setLoading] = useState(true);
+      const [loading, setLoading] = useState(false);
     const [recommendedCourses, setRecommendedCourses] = useState<Course[] | null>(null);
-  
+    const {user} = useSelector((state:RootState)=>state)
     useEffect(() => {
+      if(user.isLoggedIn){
       const fetchCourses = async () => {
         setLoading(true);
         try {
@@ -26,9 +30,14 @@ export const RecommendedCourses = () => {
           setLoading(false);
         }
       };
-  
-      fetchCourses();
-    }, []);
+
+        fetchCourses();
+      }else{
+        setRecommendedCourses(dummyCourses);
+      }
+
+
+    }, [setRecommendedCourses]);
     
   if (!recommendedCourses || loading) {
     return (

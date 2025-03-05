@@ -47,7 +47,7 @@ export const Homepage: React.FC = () => {
         </article>
       )}
       <BrowseCourses />
-      <RecommendedCourses />
+      {state && state.user.userInfo.role!=='instructor' && <RecommendedCourses /> }
       <PopularInstructors />
     </section>
   );
