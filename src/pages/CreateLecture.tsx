@@ -3,12 +3,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { UploadLectureMedia } from "@/components";
-import { createLecture, fetchUserCourses } from "@/api/courseService";
+import { createLecture, fetchUserCourses, Lecture } from "@/api/courseService";
 import { Course } from "@/types";
 import { toast } from "react-toastify";
 
 export function CreateLecture() {
-  const [lecture, setLecture] = useState({
+  const [lecture, setLecture] = useState<Partial<Lecture>>({
     course_id: "",
     title: "",
     description: "",
@@ -54,7 +54,7 @@ export function CreateLecture() {
     const fetchCourses = async () => {
       try {
         const response = await fetchUserCourses();
-        if (response.status !== 200) {
+        if (response.status !== 200 || !response.data.data.courses) {
           throw new Error("Error fetching courses");
         }
         setCourses(response.data.data.courses);

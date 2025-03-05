@@ -1,14 +1,22 @@
-import { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import axios from "axios";
+import { Course } from "@/types";
 
-export const UploadBannerAndIntro = ({ setCourse }) => {
-  const [bannerImage, setBannerImage] = useState(null);
-  const [introVideo, setIntroVideo] = useState(null);
+interface UploadBannerAndIntroVideoProps {
+  setCourse: Dispatch<SetStateAction<Partial<Course>>>;
+}
+
+export const UploadBannerAndIntro: React.FC<UploadBannerAndIntroVideoProps> = ({
+  setCourse,
+}) => {
+  const [bannerImage, setBannerImage] = useState<File | null>(null);
+  const [introVideo, setIntroVideo] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [message, setMessage] = useState("");
 
-  const handleFileChange = (e) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, files } = e.target;
+    if (!files) return;
     if (name === "banner_image") setBannerImage(files[0]);
     if (name === "intro_video") setIntroVideo(files[0]);
   };

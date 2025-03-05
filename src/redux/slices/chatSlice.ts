@@ -8,9 +8,12 @@ interface ChatState {
     user1_id: string;
     user2_id: string;
     user1_name: string;
+    user1_avatar: string;
+    user2_avatar: string;
     user2_name: string;
     last_message?: string;
-    last_sent_at?: string;
+    last_message_time?: string;
+    has_unread_messages: boolean;
   }>;
   messages: Array<{
     message: string;

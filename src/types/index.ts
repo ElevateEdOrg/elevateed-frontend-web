@@ -36,8 +36,8 @@ export interface Course {
   intro_video: string;
   created_at: string;
   updated_at: string;
-  total_students?:number;
-  avg_rating?:number;
+  total_students?: number;
+  avg_rating: number;
   Category: {
     id: string;
     name: string;
@@ -65,4 +65,29 @@ export interface APIResponse {
   };
   status: number;
   statusText: string;
+}
+export interface Lecture {
+  course_id: string;
+  id: string;
+  title: string;
+  description: string;
+  video_path: string | null;
+  pdf_path: string | null;
+}
+
+export interface CourseContent {
+  course: Omit<
+    Course,
+    | "category_id"
+    | "created_at"
+    | "updated_at"
+    | "total_students"
+    | "avg_rating"
+    | "Category"
+    | "Enrollment"
+  > & {
+    Lectures: Lecture[];
+  };
+  userProgress: string;
+  userRating: string;
 }

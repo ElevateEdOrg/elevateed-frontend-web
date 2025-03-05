@@ -13,6 +13,7 @@ import { RootState } from "@/redux/store";
 import { addToCart } from "@/redux/slices/cartSlice";
 import { setAuthState } from "@/redux/slices/userSlice";
 import { toast } from "react-toastify";
+import { Loader } from "@/components";
 export const SingleCourse = () => {
   const [course, setCourse] = useState<Course | null>(null);
   const { courseId } = useParams();
@@ -41,7 +42,12 @@ export const SingleCourse = () => {
     toast.success("Course added to cart");
   };
 
-  if (!course) return <section className="pt-24">Loading...</section>;
+  if (!course)
+    return (
+      <section className="pt-24 h-screen flex items-center justify-center">
+        <Loader />
+      </section>
+    );
 
   return (
     <section className="pt-24 pb-10 min-h-screen flex flex-col-reverse xl:flex-row justify-center gap-10 px-6 lg:px-44 relative">

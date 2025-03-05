@@ -2,21 +2,19 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { CiSearch } from "react-icons/ci";
 import { SidebarTrigger } from "../ui/sidebar";
-import { IoMdCart } from "react-icons/io";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { CustomAvatar } from "./CustomAvatar";
 import { AuthStates } from "@/types";
 import { Cart } from "./Cart";
 import { logo } from "@/assets";
-import { userInfo } from "os";
 
 interface HeaderProps {
   authType: string | null;
   setAuthType: React.Dispatch<React.SetStateAction<AuthStates | null>>;
 }
 
-export const Header: React.FC<HeaderProps> = ({ authType, setAuthType }) => {
+export const Header: React.FC<HeaderProps> = ({ setAuthType }) => {
   const state = useSelector((state: RootState) => state);
   const { user } = state;
 

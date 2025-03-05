@@ -64,14 +64,16 @@ const SearchResults: React.FC = () => {
 
     // Price Sorting
     if (priceSort === "low-to-high") {
-      courses.sort((a, b) => a.price - b.price);
+      courses.sort((a, b) => Number(a.price) - Number(b.price));
     } else if (priceSort === "high-to-low") {
-      courses.sort((a, b) => b.price - a.price);
+      courses.sort((a, b) => Number(b.price) - Number(a.price));
     }
 
     // Price Range Filter
     courses = courses.filter(
-      (course) => course.price >= priceRange[0] && course.price <= priceRange[1]
+      (course) =>
+        Number(course.price) >= priceRange[0] &&
+        Number(course.price) <= priceRange[1]
     );
 
     // Rating Filter

@@ -20,3 +20,4 @@ export * from "./Course/UpdateCourse";
 export * from "./ChatWidget/StartNewChat";
 export * from "./Course/Quiz";
 export * from "./Loader";
+export * from "./Course/GiveReview";

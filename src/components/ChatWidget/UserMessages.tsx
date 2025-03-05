@@ -79,6 +79,7 @@ export const UserMessages: React.FC<UserMessagesProps> = ({ socket }) => {
     }
 
     const handleReceiveMessage = (data: ReceivedMessage) => {
+      console.log("Old messages", messages);
       dispatch(
         setMessages([
           ...messages,
@@ -109,7 +110,7 @@ export const UserMessages: React.FC<UserMessagesProps> = ({ socket }) => {
     return () => {
       socket.off("receive_message", handleReceiveMessage);
     };
-  }, [openChat]);
+  }, [openChat, messages]);
 
   const sendMessage = () => {
     if (openChat === null || !userInfo.id) return;

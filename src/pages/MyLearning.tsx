@@ -2,20 +2,19 @@ import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router";
 import {
   fetchCourseContent,
-  FetchCourseDetailsResponse,
   Lecture,
   updateLectureStatus,
 } from "../api/courseService";
-import { Loader, Quiz, StartChatButton } from "@/components";
+import { GiveReview, Loader, Quiz, StartChatButton } from "@/components";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { FaChevronDown } from "react-icons/fa";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { toast } from "react-toastify";
+import { CourseContent } from "@/types";
 
 export const MyLearning: React.FC = () => {
-  const [courseContent, setCourseContent] =
-    useState<FetchCourseDetailsResponse>();
+  const [courseContent, setCourseContent] = useState<CourseContent>();
   const [activeTab, setActiveTab] = useState("Overview");
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selectedLecture, setSelectedLecture] = useState<Lecture>();
@@ -23,7 +22,7 @@ export const MyLearning: React.FC = () => {
   const [isQuizOpen, setIsQuizOpen] = useState(false);
   const { courseId } = useParams();
 
-  const tabs = ["Overview", "Q&A", "Notes"];
+  const tabs = ["Overview", "Notes", "Review"];
 
   const { user } = useSelector((state: RootState) => state);
 
@@ -57,7 +56,7 @@ export const MyLearning: React.FC = () => {
           if (!prev) return prev;
           return {
             ...prev,
-            userProgress: response.data.userProgress,
+            userProgress: String(response.data.progress),
           };
         });
       } catch (error) {
@@ -74,10 +73,10 @@ export const MyLearning: React.FC = () => {
       return;
     }
 
-    // if (courseContent?.userProgress < 80) {
-    //   toast.info("You need to complete 80% of the course to take the quiz");
-    //   return;
-    // }
+    if (Number(courseContent?.userProgress) < 80) {
+      toast.info("You need to complete 80% of the course to take the quiz");
+      return;
+    }
     setIsQuizOpen(true);
   };
 
@@ -305,6 +304,11 @@ export const MyLearning: React.FC = () => {
                   </div>
                 );
               })}
+            </div>
+          )}
+          {activeTab === "Review" && (
+            <div className="mt-6 ">
+              <GiveReview course_id={courseId} />
             </div>
           )}
         </div>

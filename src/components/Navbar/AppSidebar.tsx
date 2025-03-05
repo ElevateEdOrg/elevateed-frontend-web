@@ -1,4 +1,4 @@
-import { IoMdCart, IoMdHome, IoIosBookmarks } from "react-icons/io";
+import { IoMdHome, IoIosBookmarks } from "react-icons/io";
 import { RiLoginCircleFill } from "react-icons/ri";
 import { LiaSignInAltSolid } from "react-icons/lia";
 
