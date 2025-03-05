@@ -18,3 +18,4 @@ export * from "./Course/UploadBannerAndIntro";
 export * from "./Course/UploadLectureMedia";
 export * from "./Course/UpdateCourse";
 export * from "./ChatWidget/StartNewChat";
+export * from "./Course/Quiz";
