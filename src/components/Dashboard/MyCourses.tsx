@@ -19,9 +19,12 @@ export const MyCourses = () => {
         if (response.status !== 200) {
           throw new Error("Error fetching courses");
         }
-        if (user.userInfo.role === "instructor") {
+        if (user.userInfo.role === "instructor" && response.data.data.courses) {
           setFetchedCourses(response.data.data.courses);
-        } else {
+        } else if (
+          user.userInfo.role === "student" &&
+          response.data.data.EnrolledCourses
+        ) {
           setFetchedCourses(response.data.data.EnrolledCourses);
         }
       } catch (error) {
@@ -33,6 +36,7 @@ export const MyCourses = () => {
     fetchCourses();
   }, []);
 
+  console.log("FetchedCourses:", fetchedCourses);
   return (
     <article className="flex grow w-full flex-wrap gap-4 justify-around mt-10">
       {loading && (

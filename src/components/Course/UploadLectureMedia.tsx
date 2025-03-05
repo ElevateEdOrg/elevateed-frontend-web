@@ -1,14 +1,22 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import axios from "axios";
+import { Lecture } from "@/api/courseService";
 
-export const UploadLectureMedia = ({ setLecture }) => {
-  const [video, setVideo] = useState(null);
-  const [pdf, setPdf] = useState(null);
+interface UploadLectureMediaProps {
+  setLecture: Dispatch<SetStateAction<Partial<Lecture>>>;
+}
+
+export const UploadLectureMedia: React.FC<UploadLectureMediaProps> = ({
+  setLecture,
+}) => {
+  const [video, setVideo] = useState<File | null>(null);
+  const [pdf, setPdf] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [message, setMessage] = useState("");
 
-  const handleFileChange = (e) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, files } = e.target;
+    if (!files) return;
     if (name === "video") setVideo(files[0]);
     if (name === "pdf") setPdf(files[0]);
   };

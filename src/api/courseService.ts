@@ -1,32 +1,15 @@
-// export const loginUser = async (
-//   email: string,
-//   password: string
-// ): Promise<AuthUserResponse> => {
-//   try {
-//     const response = api.post("/api/auth/login", {
-//       email,
-//       password,
-//     });
-//     return response;
-//   } catch (error) {
-//     return handleApiError(error);
-//   }
-// };
-
-
-export interface Instructors  {
+export interface Instructors {
   id: string;
   full_name: string;
   email: string;
   avatar: string | null;
   total_enrollments: number;
   total_courses: number;
-};
-
-export interface FtechTopInstructors {
-  data:Instructors
 }
 
+export interface FetchTopInstructors {
+  data: Instructors;
+}
 
 export interface FetchCoursesResponse {
   status: number;
@@ -34,6 +17,7 @@ export interface FetchCoursesResponse {
     data: Course[];
   };
 }
+
 export interface FetchSingleCourseResponse {
   status: number;
   data: {
@@ -52,12 +36,26 @@ export interface FetchCategoriesResponse {
 }
 
 export interface FetchUserCoursesResponse {
+  status: number;
   data: {
-    id: number;
-    full_name: string;
     data: {
-      EnrolledCourses: Course[];
+      id: string;
+      full_name: string;
+      EnrolledCourses?: Course[];
+      courses?: Course[];
     };
+  };
+}
+
+export interface InstructorResponse extends Omit<User, "role"> {
+  total_enrollments: string;
+  total_courses: string;
+}
+
+export interface FetchInstructorResponse {
+  status: number;
+  data: {
+    data: InstructorResponse[];
   };
 }
 
@@ -69,6 +67,36 @@ export interface FetchCourseDetailsResponse {
   userProgress?: number;
 }
 
+export interface CreateCourseResponse {
+  status: number;
+  data: {
+    message: string;
+    data: Omit<
+      Course,
+      "avg_rating" | "total_students" | "Category" | "Enrollment"
+    >;
+  };
+}
+
+export interface CreateLectureResponse {
+  status: number;
+  data: {
+    message: string;
+    data: Omit<Lecture, "pdf_path"> & { pdf_path: string | null };
+  };
+}
+
+export interface UpdateCourseResponse {
+  status: number;
+  data: {
+    message: string;
+    data: Omit<
+      Course,
+      "avg_rating" | "total_students" | "Category" | "Enrollment"
+    >;
+  };
+}
+
 export interface CourseDetails {
   id: string;
   title: string;
@@ -78,9 +106,15 @@ export interface CourseDetails {
   welcome_msg: string;
   intro_video: string | null;
   Lectures: Lecture[];
+  Instructor: {
+    id: string;
+    full_name: string;
+    avatar: string;
+  };
 }
 
 export interface Lecture {
+  course_id: string;
   id: string;
   title: string;
   description: string;
@@ -107,9 +141,43 @@ export interface UploadBannerAndIntroVideoResponse {
   };
 }
 
+export interface FetchQuizResponse {
+  status: number;
+  data: {
+    data: {
+      question: string;
+      options: string[];
+      answer: string;
+    }[];
+  };
+}
+
+export interface FetchCourseContentResponse {
+  status: number;
+  data: {
+    data: CourseContent;
+  };
+}
+
+export interface UpdateLectureStatusResponse {
+  status: number;
+  data: {
+    success: boolean;
+    message: string;
+    progress: number;
+  };
+}
+
+export interface GiveReviewResponse {
+  status: number;
+  data: {
+    message: string;
+    courseAvgrating: number;
+  };
+}
+
 import { api, handleApiError } from "@/lib/axios";
-import { Course } from "@/types";
-import axios from "axios";
+import { Course, CourseContent, User } from "@/types";
 
 export const fetchAllCourses = async (): Promise<FetchCoursesResponse> => {
   try {
@@ -130,11 +198,9 @@ export const fetchAllCategories =
     }
   };
 
-export const fetchUserCourses = async (): Promise<any> => {
+export const fetchUserCourses = async (): Promise<FetchUserCoursesResponse> => {
   try {
-    const response = await api.post<FetchUserCoursesResponse>(
-      "/api/courses/getcourses"
-    );
+    const response = await api.post("/api/courses/getcourses");
     return response;
   } catch (error) {
     return handleApiError(error);
@@ -163,7 +229,9 @@ export const fetchUnpaidCourseFromId = async (
   }
 };
 
-export const fetchCourseContent = async (courseId: string): Promise<any> => {
+export const fetchCourseContent = async (
+  courseId: string
+): Promise<FetchCourseContentResponse> => {
   try {
     const response = api.get(`/api/courses/content/${courseId}`);
     return response;
@@ -206,7 +274,9 @@ export const uploadBannerAndIntroVideo = async (
   }
 };
 
-export const createCourse = async (course: Partial<Course>): Promise<any> => {
+export const createCourse = async (
+  course: Partial<Course>
+): Promise<CreateCourseResponse> => {
   try {
     const response = api.post("/api/courses/createcourse", course);
     return response;
@@ -217,7 +287,7 @@ export const createCourse = async (course: Partial<Course>): Promise<any> => {
 
 export const createLecture = async (
   lecture: Partial<Lecture>
-): Promise<any> => {
+): Promise<CreateLectureResponse> => {
   try {
     const response = api.post("/api/courses/lectures/createlecture", lecture);
     return response;
@@ -229,7 +299,7 @@ export const createLecture = async (
 export const updateCourse = async (
   courseId: string,
   course: Partial<Course>
-): Promise<any> => {
+): Promise<UpdateCourseResponse> => {
   try {
     const response = api.put(`/api/courses/update/${courseId}`, course);
     return response;
@@ -238,17 +308,19 @@ export const updateCourse = async (
   }
 };
 
+export const fetchTopInstructors =
+  async (): Promise<FetchInstructorResponse> => {
+    try {
+      const response = api.get(`/api/courses/topinstructors`);
+      return response;
+    } catch (error) {
+      return handleApiError(error);
+    }
+  };
 
-export const fetchTopInstructors = async (): Promise<any> => {
-  try {
-    const response = api.get(`/api/courses/topinstructors`);
-    return response;
-  } catch (error) {
-    return handleApiError(error);
-  }
-};
-
-export const updateLectureStatus = async (lectureId: string): Promise<any> => {
+export const updateLectureStatus = async (
+  lectureId: string
+): Promise<UpdateLectureStatusResponse> => {
   try {
     const response = api.post(
       `/api/courses/lectures/updatestatus/${lectureId}`
@@ -259,10 +331,34 @@ export const updateLectureStatus = async (lectureId: string): Promise<any> => {
   }
 };
 
+export const fetchRecommendedCourses =
+  async (): Promise<FetchCoursesResponse> => {
+    try {
+      const response = api.get("/api/courses/ai/getrecommendations");
+      return response;
+    } catch (error) {
+      return handleApiError(error);
+    }
+  };
 
-export const fetchRecommendedCourses = async (): Promise<FetchCoursesResponse> => {
+export const fetchAIQuiz = async (): Promise<FetchQuizResponse> => {
   try {
-    const response = api.get("/api/courses/ai/getrecommendations");
+    const response = api.get("/api/courses/ai/getquiz");
+    return response;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+export const giveReviewApi = async (
+  course_id: string,
+  rating: number
+): Promise<GiveReviewResponse> => {
+  try {
+    const response = api.put("/api/courses/updatecourserating", {
+      course_id,
+      rating,
+    });
     return response;
   } catch (error) {
     return handleApiError(error);

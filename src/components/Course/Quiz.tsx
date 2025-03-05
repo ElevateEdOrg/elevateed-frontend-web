@@ -1,63 +1,28 @@
-import { useState } from "react";
-
-const quizData = [
-  {
-    question: "What is the capital of France?",
-    options: ["Berlin", "Madrid", "Paris", "Lisbon"],
-    answer: "Paris",
-  },
-  {
-    question: "What is 2 + 2?",
-    options: ["3", "4", "5", "6"],
-    answer: "4",
-  },
-  {
-    question: "Which planet is known as the Red Planet?",
-    options: ["Earth", "Mars", "Jupiter", "Venus"],
-    answer: "Mars",
-  },
-  {
-    question: "Who wrote 'Hamlet'?",
-    options: ["Shakespeare", "Hemingway", "Tolkien", "Rowling"],
-    answer: "Shakespeare",
-  },
-  {
-    question: "What is the largest ocean on Earth?",
-    options: ["Atlantic", "Indian", "Pacific", "Arctic"],
-    answer: "Pacific",
-  },
-  {
-    question: "Which element has the chemical symbol 'O'?",
-    options: ["Gold", "Oxygen", "Osmium", "Hydrogen"],
-    answer: "Oxygen",
-  },
-  {
-    question: "What is the square root of 64?",
-    options: ["6", "7", "8", "9"],
-    answer: "8",
-  },
-  {
-    question: "Who painted the Mona Lisa?",
-    options: ["Van Gogh", "Da Vinci", "Picasso", "Rembrandt"],
-    answer: "Da Vinci",
-  },
-  {
-    question: "What is the boiling point of water in Celsius?",
-    options: ["90", "100", "110", "120"],
-    answer: "100",
-  },
-  {
-    question: "Which gas do plants use for photosynthesis?",
-    options: ["Oxygen", "Carbon Dioxide", "Nitrogen", "Hydrogen"],
-    answer: "Carbon Dioxide",
-  },
-];
+import { fetchAIQuiz } from "@/api/courseService";
+import { useEffect, useState } from "react";
 
 export const Quiz = () => {
   const [selectedAnswers, setSelectedAnswers] = useState(Array(10).fill(null));
-  const [score, setScore] = useState(null);
+  const [score, setScore] = useState<number | null>(null);
+  const [quiz, setQuiz] = useState<
+    { question: string; options: string[]; answer: string }[]
+  >([]);
 
-  const handleOptionChange = (questionIndex, option) => {
+  useEffect(() => {
+    const fetchQuiz = async () => {
+      try {
+        const response = await fetchAIQuiz();
+        if (response.status === 200) {
+          setQuiz(response.data.data);
+        }
+      } catch (error) {
+        console.error("error fetching quiz", error);
+      }
+    };
+    fetchQuiz();
+  }, []);
+
+  const handleOptionChange = (questionIndex: number, option: string) => {
     const newAnswers = [...selectedAnswers];
     newAnswers[questionIndex] = option;
     setSelectedAnswers(newAnswers);
@@ -65,7 +30,8 @@ export const Quiz = () => {
 
   const handleSubmit = () => {
     let calculatedScore = 0;
-    quizData.forEach((q, index) => {
+    console.log("Selected Answers", selectedAnswers);
+    quiz.forEach((q, index) => {
       if (selectedAnswers[index] === q.answer) {
         calculatedScore++;
       }
@@ -79,7 +45,7 @@ export const Quiz = () => {
         AI QUIZ
       </h2>
       {score === null &&
-        quizData.map((q, index) => (
+        quiz.map((q, index) => (
           <div key={index} className="mb-4">
             <p className="font-semibold text-2xl">
               {index + 1}. {q.question}
@@ -108,6 +74,7 @@ export const Quiz = () => {
           </div>
         ))}
       <button
+        disabled={score !== null || selectedAnswers.includes(null)}
         onClick={handleSubmit}
         className="bg-blue-500 text-white px-4 py-2 mt-4"
       >

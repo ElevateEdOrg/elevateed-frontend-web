@@ -1,13 +1,16 @@
 import { DefaultInstructorImg } from "@/assets";
 import React, { useState, useEffect } from "react";
-import { fetchTopInstructors, Instructors } from "../../api/courseService";
+import {
+  fetchTopInstructors,
+  InstructorResponse,
+} from "../../api/courseService";
 import { Loader } from "../Loader";
 
 export const PopularInstructors = () => {
   const [loading, setLoading] = useState(true);
-  const [topInstructors, setTopInstructors] = useState<Instructors[] | null>(
-    null
-  );
+  const [topInstructors, setTopInstructors] = useState<
+    InstructorResponse[] | null
+  >(null);
 
   useEffect(() => {
     const fetchInstructors = async () => {
@@ -76,7 +79,7 @@ export const PopularInstructors = () => {
             <img
               src={instructor.avatar || DefaultInstructorImg}
               alt={instructor.full_name}
-              className="w-full object-cover"
+              className="w-full object-cover aspect-square"
             />
           </div>
         ))}

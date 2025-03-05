@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { CourseCard } from "./CourseCard";
-import { dummyCourses } from "@/../db";
 import { FaRupeeSign } from "react-icons/fa";
 import { DefaultCourseBanner1, personIcon } from "@/assets";
 import {

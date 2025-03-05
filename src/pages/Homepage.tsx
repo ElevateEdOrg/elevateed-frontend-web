@@ -1,7 +1,6 @@
 import { useSelector } from "react-redux";
 import {
   BrowseCourses,
-  CourseCard,
   HeroBanner,
   PopularInstructors,
   RecommendedCourses,
@@ -24,7 +23,9 @@ export const Homepage: React.FC = () => {
     const fetchUserEnrolledCourses = async () => {
       try {
         const response = await fetchUserCourses();
-        console.log("response", response);
+        if (response.status !== 200 || !response.data.data.EnrolledCourses) {
+          throw new Error("Error fetching courses");
+        }
         setUserCourses(response.data.data.EnrolledCourses);
       } catch (error) {
         console.log("Error fetching Courses", error);
@@ -47,7 +48,9 @@ export const Homepage: React.FC = () => {
         </article>
       )}
       <BrowseCourses />
-      {state && state.user.userInfo.role!=='instructor' && <RecommendedCourses /> }
+      {state && state.user.userInfo.role !== "instructor" && (
+        <RecommendedCourses />
+      )}
       <PopularInstructors />
     </section>
   );

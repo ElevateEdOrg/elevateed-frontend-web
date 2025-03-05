@@ -5,9 +5,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { UploadBannerAndIntro } from "@/components";
 import { createCourse, fetchAllCategories } from "@/api/courseService";
 import { toast } from "react-toastify";
+import { Course } from "@/types";
 
 export function CreateCourse() {
-  const [course, setCourse] = useState({
+  const [course, setCourse] = useState<Partial<Course>>({
     title: "",
     description: "",
     category_id: "", // Stores selected category ID

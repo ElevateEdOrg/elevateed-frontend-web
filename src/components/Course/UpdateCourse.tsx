@@ -12,7 +12,7 @@ import { Course } from "@/types";
 import { toast } from "react-toastify";
 
 export function UpdateCourse() {
-  const [course, setCourse] = useState({
+  const [course, setCourse] = useState<Partial<Course>>({
     title: "",
     description: "",
     category_id: "",
@@ -92,7 +92,7 @@ export function UpdateCourse() {
     const fetchCourses = async () => {
       try {
         const response = await fetchUserCourses();
-        if (response.status !== 200) {
+        if (response.status !== 200 || !response.data.data.courses) {
           throw new Error("Error fetching courses");
         }
         setCourses(response.data.data.courses);

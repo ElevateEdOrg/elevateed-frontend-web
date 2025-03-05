@@ -49,7 +49,7 @@ export const dummyCourses: Partial<Course>[] = [
     },
     description:
       "Get started with data science, covering basics of statistics and Python.",
-    price: 49.99,
+    price: "49.99",
     Category: {
       id: "cat-789",
       name: "Data Science",
@@ -67,7 +67,7 @@ export const dummyCourses: Partial<Course>[] = [
     },
     description:
       "Learn how to use Python libraries like NumPy, Pandas, and Matplotlib for data analysis.",
-    price: 59.99,
+    price: "59.99",
     Category: {
       id: "cat-789",
       name: "Data Science",
@@ -85,7 +85,7 @@ export const dummyCourses: Partial<Course>[] = [
     },
     description:
       "A complete guide to supervised and unsupervised learning models.",
-    price: 79.99,
+    price: "79.99",
     Category: {
       id: "cat-789",
       name: "Data Science",
@@ -103,7 +103,7 @@ export const dummyCourses: Partial<Course>[] = [
     },
     description:
       "Build and train deep learning models using TensorFlow and Keras.",
-    price: 99.99,
+    price: "99.99",
     Category: {
       id: "cat-789",
       name: "Data Science",
@@ -121,7 +121,7 @@ export const dummyCourses: Partial<Course>[] = [
     },
     description:
       "Master data visualization techniques using Seaborn and Matplotlib.",
-    price: 69.99,
+    price: "69.99",
     Category: {
       id: "cat-789",
       name: "Data Science",
@@ -139,7 +139,7 @@ export const dummyCourses: Partial<Course>[] = [
     },
     description:
       "Learn to process large datasets using Apache Spark and Hadoop.",
-    price: 89.99,
+    price: "89.99",
     Category: {
       id: "cat-789",
       name: "Data Science",
@@ -156,7 +156,7 @@ export const dummyCourses: Partial<Course>[] = [
       full_name: "Robert Martin",
     },
     description: "Analyze time-dependent data using ARIMA and LSTM models.",
-    price: 74.99,
+    price: "74.99",
     Category: {
       id: "cat-789",
       name: "Data Science",
@@ -174,7 +174,7 @@ export const dummyCourses: Partial<Course>[] = [
     },
     description:
       "Process and analyze textual data with Natural Language Processing.",
-    price: 94.99,
+    price: "94.99",
     Category: {
       id: "cat-789",
       name: "Data Science",
@@ -191,7 +191,7 @@ export const dummyCourses: Partial<Course>[] = [
       full_name: "James Carter",
     },
     description: "Understand statistical concepts essential for data science.",
-    price: 54.99,
+    price: "54.99",
     Category: {
       id: "cat-789",
       name: "Data Science",
@@ -209,7 +209,7 @@ export const dummyCourses: Partial<Course>[] = [
     },
     description:
       "Explore how reinforcement learning powers AI models like AlphaGo.",
-    price: 119.99,
+    price: "119.9",
     Category: {
       id: "cat-789",
       name: "Data Science",
@@ -227,7 +227,7 @@ export const dummyCourses: Partial<Course>[] = [
     },
     description:
       "Learn JavaScript from scratch, covering variables, loops, and functions.",
-    price: 49.99,
+    price: "49.99",
     Category: {
       id: "cat-123",
       name: "Programming",
@@ -245,7 +245,7 @@ export const dummyCourses: Partial<Course>[] = [
     },
     description:
       "Master TypeScript with deep dives into generics, decorators, and interfaces.",
-    price: 89.99,
+    price: "89.99",
     Category: {
       id: "cat-123",
       name: "Programming",
@@ -263,7 +263,7 @@ export const dummyCourses: Partial<Course>[] = [
     },
     description:
       "Start coding in Python, covering syntax, OOP, and data handling.",
-    price: 59.99,
+    price: "59.99",
     Category: {
       id: "cat-123",
       name: "Programming",
@@ -281,7 +281,7 @@ export const dummyCourses: Partial<Course>[] = [
     },
     description:
       "Learn front-end and back-end development with JavaScript, Node.js, and databases.",
-    price: 119.99,
+    price: "119.9",
     Category: {
       id: "cat-123",
       name: "Programming",
@@ -298,7 +298,7 @@ export const dummyCourses: Partial<Course>[] = [
       full_name: "David Brown",
     },
     description: "Master C++ and data structures to crack coding interviews.",
-    price: 99.99,
+    price: "99.99",
     Category: {
       id: "cat-123",
       name: "Programming",
@@ -316,7 +316,7 @@ export const dummyCourses: Partial<Course>[] = [
     },
     description:
       "Master React.js, Redux, and state management for modern web applications.",
-    price: 79.99,
+    price: "79.99",
     Category: {
       id: "cat-123",
       name: "Programming",
@@ -334,7 +334,7 @@ export const dummyCourses: Partial<Course>[] = [
     },
     description:
       "Learn to build scalable backend APIs with Node.js and Express.",
-    price: 69.99,
+    price: "69.99",
     Category: {
       id: "cat-123",
       name: "Programming",
@@ -352,7 +352,7 @@ export const dummyCourses: Partial<Course>[] = [
     },
     description:
       "Learn the basics of Go, including concurrency and performance optimizations.",
-    price: 74.99,
+    price: "74.99",
     Category: {
       id: "cat-123",
       name: "Programming",
@@ -370,7 +370,7 @@ export const dummyCourses: Partial<Course>[] = [
     },
     description:
       "Learn Rust, memory safety, and systems programming techniques.",
-    price: 84.99,
+    price: "84.99",
     Category: {
       id: "cat-123",
       name: "Programming",
@@ -387,7 +387,7 @@ export const dummyCourses: Partial<Course>[] = [
       full_name: "Sophia Moore",
     },
     description: "Master Kotlin to build Android apps using Jetpack Compose.",
-    price: 89.99,
+    price: "89.99",
     Category: {
       id: "cat-123",
       name: "Programming",
@@ -404,7 +404,7 @@ export const dummyCourses: Partial<Course>[] = [
       full_name: "John Doe",
     },
     description: "Learn the basics of web development with HTML and CSS.",
-    price: 39.99,
+    price: "39.99",
     Category: {
       id: "cat-456",
       name: "Web Development",
@@ -422,7 +422,7 @@ export const dummyCourses: Partial<Course>[] = [
     },
     description:
       "Master responsive design techniques using CSS Grid and Flexbox.",
-    price: 49.99,
+    price: "49.99",
     Category: {
       id: "cat-456",
       name: "Web Development",
@@ -439,7 +439,7 @@ export const dummyCourses: Partial<Course>[] = [
       full_name: "Michael Johnson",
     },
     description: "Understand JavaScript's role in modern web development.",
-    price: 59.99,
+    price: "59.99",
     Category: {
       id: "cat-456",
       name: "Web Development",
@@ -456,7 +456,7 @@ export const dummyCourses: Partial<Course>[] = [
       full_name: "Sarah Lee",
     },
     description: "Build powerful front-end applications using React and hooks.",
-    price: 99.99,
+    price: "99.99",
     Category: {
       id: "cat-456",
       name: "Web Development",
@@ -474,7 +474,7 @@ export const dummyCourses: Partial<Course>[] = [
     },
     description:
       "Master both frontend and backend development with MERN stack.",
-    price: 119.99,
+    price: "119.9",
     Category: {
       id: "cat-456",
       name: "Web Development",
@@ -492,7 +492,7 @@ export const dummyCourses: Partial<Course>[] = [
     },
     description:
       "Learn backend development with Node.js, Express, and databases.",
-    price: 79.99,
+    price: "79.99",
     Category: {
       id: "cat-456",
       name: "Web Development",
@@ -509,7 +509,7 @@ export const dummyCourses: Partial<Course>[] = [
       full_name: "Robert Martin",
     },
     description: "Build powerful SEO-friendly web apps using Next.js.",
-    price: 89.99,
+    price: "89.99",
     Category: {
       id: "cat-456",
       name: "Web Development",
@@ -527,7 +527,7 @@ export const dummyCourses: Partial<Course>[] = [
     },
     description:
       "Learn how to optimize web apps for better performance and SEO.",
-    price: 74.99,
+    price: "74.99",
     Category: {
       id: "cat-456",
       name: "Web Development",
@@ -544,7 +544,7 @@ export const dummyCourses: Partial<Course>[] = [
       full_name: "James Carter",
     },
     description: "Start building websites easily with WordPress and Elementor.",
-    price: 64.99,
+    price: "64.99",
     Category: {
       id: "cat-456",
       name: "Web Development",
@@ -561,7 +561,7 @@ export const dummyCourses: Partial<Course>[] = [
       full_name: "Sophia Moore",
     },
     description: "Build and optimize APIs with GraphQL and Apollo Server.",
-    price: 94.99,
+    price: "94.99",
     Category: {
       id: "cat-456",
       name: "Web Development",
