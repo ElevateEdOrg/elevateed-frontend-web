@@ -10,6 +10,7 @@ import {
 import { RootState } from "../../redux/store";
 import { Socket } from "socket.io-client";
 import { API_BASE_URL } from "../../lib/axios";
+import { Loader } from "../Loader";
 
 interface UserMessagesProps {
   socket: Socket;
@@ -30,6 +31,7 @@ export const UserMessages: React.FC<UserMessagesProps> = ({ socket }) => {
   const dispatch = useDispatch();
   const { chats, messages, openChat } = chatState;
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (messagesEndRef.current) {
@@ -46,11 +48,10 @@ export const UserMessages: React.FC<UserMessagesProps> = ({ socket }) => {
     setMessage("");
 
     const fetchChatHistory = async () => {
+      setLoading(true);
       try {
         const res = await fetch(
- 
           `${API_BASE_URL}/api/chat/history/${openChat.id}`
- 
         );
         if (res.ok) {
           const data = await res.json();
@@ -58,6 +59,8 @@ export const UserMessages: React.FC<UserMessagesProps> = ({ socket }) => {
         }
       } catch (error) {
         console.error("Error fetching chat history:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -153,6 +156,11 @@ export const UserMessages: React.FC<UserMessagesProps> = ({ socket }) => {
         ref={messagesEndRef}
         className="overflow-y-auto flex grow flex-col gap-2 py-2 pr-1"
       >
+        {loading && (
+          <div className="w-full h-full flex items-center justify-center">
+            <Loader />
+          </div>
+        )}
         {messages.length > 0 &&
           messages.map((message, index) =>
             message.sender_id === userInfo.id ? (

@@ -7,6 +7,7 @@ import {
   FetchCoursesResponse,
 } from "@/api/courseService";
 import { Course } from "@/types";
+import { Loader } from "../Loader";
 
 export const BrowseCourses = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -17,9 +18,12 @@ export const BrowseCourses = () => {
   const [categories, setCategories] = useState<{ id: string; name: string }[]>(
     []
   );
+  const [loadingCategories, setLoadingCategories] = useState(true);
+  const [loadingCourses, setLoadingCourses] = useState(true);
 
   useEffect(() => {
     const fetchCourses = async () => {
+      setLoadingCourses(true);
       try {
         const response: FetchCoursesResponse = await fetchAllCourses();
         const { data } = response;
@@ -27,16 +31,21 @@ export const BrowseCourses = () => {
         setFilteredCourses(data.data);
       } catch (error) {
         console.error("Error fetching courses:", error);
+      } finally {
+        setLoadingCourses(false);
       }
     };
 
     const fetchCategories = async () => {
+      setLoadingCategories(true);
       try {
         const response: FetchCategoriesResponse = await fetchAllCategories();
         const { data } = response.data;
         setCategories(data);
       } catch (error) {
         console.error("Error fetching categories:", error);
+      } finally {
+        setLoadingCategories(false);
       }
     };
 
@@ -99,7 +108,7 @@ export const BrowseCourses = () => {
 
       <div
         ref={categoryRef}
-        className="flex gap-4 scrollbar-hidden py-4 w-full overflow-x-scroll"
+        className="flex gap-4 scrollbar-hidden py-4 w-full h-fit overflow-x-scroll"
       >
         <button
           onClick={() => setCategory("All Categories")}
@@ -107,6 +116,7 @@ export const BrowseCourses = () => {
         >
           All Categories
         </button>
+        {loadingCategories && <Loader />}
         {categories.map((category) => (
           <button
             key={category.id}
@@ -122,6 +132,11 @@ export const BrowseCourses = () => {
         ref={scrollRef}
         className="flex overflow-scroll w-full gap-4 py-4 scrollbar-hidden flex-nowrap"
       >
+        {loadingCourses && (
+          <div className=" w-full h-96 flex justify-center items-center">
+            <Loader />
+          </div>
+        )}
         {filteredCourses.map((course) => (
           <CourseCard key={course.id} course={course} />
         ))}

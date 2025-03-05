@@ -12,6 +12,7 @@ import {
 import { fetchAllCourses, FetchCoursesResponse } from "@/api/courseService"; // Update with actual API path
 import { Course } from "@/types";
 import { DefaultCourseBanner1 } from "@/assets";
+import { Loader } from "../Loader";
 
 export function HeroBanner() {
   const [topCourses, setTopCourses] = useState<Course[]>([]);
@@ -48,7 +49,11 @@ export function HeroBanner() {
   }, []);
 
   if (loading) {
-    return <div className="text-center py-10 text-lg">Loading...</div>;
+    return (
+      <div className="text-center py-10 text-lg">
+        <Loader />
+      </div>
+    );
   }
 
   return (
@@ -75,7 +80,7 @@ export function HeroBanner() {
                 <div className="sm:aspect-video bg-brand-secondary w-full sm:w-1/2 md:w-auto h-1/2 sm:h-full xl:w-auto xl:h-full">
                   <img
                     className="w-full h-full object-cover"
-                    src={course.banner_image|| DefaultCourseBanner1}
+                    src={course.banner_image || DefaultCourseBanner1}
                     alt={course.title}
                   />
                 </div>
