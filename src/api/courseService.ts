@@ -258,3 +258,13 @@ export const updateLectureStatus = async (lectureId: string): Promise<any> => {
     return handleApiError(error);
   }
 };
+
+
+export const fetchRecommendedCourses = async (): Promise<FetchCoursesResponse> => {
+  try {
+    const response = api.get("/api/courses/ai/getrecommendations");
+    return response;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
