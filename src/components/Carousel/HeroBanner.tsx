@@ -67,7 +67,7 @@ export function HeroBanner() {
                   <h2 className="text-white sm:text-2xl lg:text-3xl xl:text-5xl font-extrabold tracking-wider md:w-2/3">
                     {course.title}
                   </h2>
-                  <p className="text-white text-xs lg:text-base xl:text-3xl sm:mt-4 xl:mt-10">
+                  <p className="text-white text-xs lg:text-base xl:text-3xl sm:mt-4 xl:mt-10 line-clamp-1">
                     {course.description}
                   </p>
                   <Link
