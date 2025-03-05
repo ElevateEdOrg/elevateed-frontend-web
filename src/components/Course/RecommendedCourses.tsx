@@ -1,44 +1,63 @@
-import React, { useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { CourseCard } from "./CourseCard";
 import { dummyCourses } from "@/../db";
-import { FaChevronDown, FaRupeeSign } from "react-icons/fa";
+import { FaRupeeSign } from "react-icons/fa";
 import { DefaultCourseBanner1, personIcon } from "@/assets";
-import {fetchRecommendedCourses,FetchCoursesResponse} from "../../api/courseService"
+import {
+  fetchAllCourses,
+  fetchRecommendedCourses,
+} from "../../api/courseService";
 
 import { Course } from "@/types";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-export const RecommendedCourses = () => {   
-      const [loading, setLoading] = useState(false);
-    const [recommendedCourses, setRecommendedCourses] = useState<Course[] | null>(null);
-    const {user} = useSelector((state:RootState)=>state)
-    useEffect(() => {
-      if(user.isLoggedIn){
-      const fetchCourses = async () => {
-        setLoading(true);
-        try {
-          const response = await fetchRecommendedCourses();
-          if (response?.data?.data) {
-            setRecommendedCourses(response.data.data);
-          } else {
-            setRecommendedCourses([]);
-          }
-        } catch (error) {
-          console.error("Error fetching instructors:", error);
+export const RecommendedCourses = () => {
+  const [loading, setLoading] = useState(false);
+  const [recommendedCourses, setRecommendedCourses] = useState<Course[] | null>(
+    null
+  );
+  const { user } = useSelector((state: RootState) => state);
+  useEffect(() => {
+    const fetchAICourses = async () => {
+      setLoading(true);
+      try {
+        const response = await fetchRecommendedCourses();
+        if (response?.data?.data) {
+          setRecommendedCourses(response.data.data);
+        } else {
           setRecommendedCourses([]);
-        } finally {
-          setLoading(false);
         }
-      };
-
-        fetchCourses();
-      }else{
-        setRecommendedCourses(dummyCourses);
+      } catch (error) {
+        console.error("Error fetching instructors:", error);
+        setRecommendedCourses([]);
+      } finally {
+        setLoading(false);
       }
+    };
+    const fetchNonAICourses = async () => {
+      setLoading(true);
+      try {
+        const response = await fetchAllCourses();
+        if (response?.data?.data) {
+          setRecommendedCourses(response.data.data);
+        } else {
+          setRecommendedCourses([]);
+        }
+      } catch (error) {
+        console.error("Error fetching instructors:", error);
+        setRecommendedCourses([]);
+      } finally {
+        setLoading(false);
+      }
+    };
 
+    if (user.isLoggedIn) {
+      fetchAICourses();
+    } else {
+      fetchNonAICourses();
+    }
+  }, [user.isLoggedIn]);
 
-    }, [setRecommendedCourses]);
-    
   if (!recommendedCourses || loading) {
     return (
       <h1 className="pt-24 h-screen flex justify-center items-center text-4xl">
@@ -94,9 +113,11 @@ export const RecommendedCourses = () => {
         </article>
         {/* Course Sidebar */}
         <div className="flex gap-4 grow flex-wrap justify-around overflow-y-auto h-[500px] lg:h-[700px]">
-          {recommendedCourses.map((course) => (
-            <CourseCard key={course.id} course={course} />
-          ))}
+          {recommendedCourses
+            .slice(1, recommendedCourses.length - 1)
+            .map((course) => (
+              <CourseCard key={course.id} course={course} />
+            ))}
         </div>
       </div>
     </article>

@@ -9,6 +9,7 @@ import { CustomAvatar } from "./CustomAvatar";
 import { AuthStates } from "@/types";
 import { Cart } from "./Cart";
 import { logo } from "@/assets";
+import { userInfo } from "os";
 
 interface HeaderProps {
   authType: string | null;
@@ -79,7 +80,7 @@ export const Header: React.FC<HeaderProps> = ({ authType, setAuthType }) => {
           </>
         ) : (
           <>
-            <Cart />
+            {user.userInfo.role === "student" && <Cart />}
             <CustomAvatar avatar={user.userInfo.avatar} />
           </>
         )}

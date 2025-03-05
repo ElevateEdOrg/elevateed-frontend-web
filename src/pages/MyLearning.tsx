@@ -6,9 +6,11 @@ import {
   Lecture,
   updateLectureStatus,
 } from "../api/courseService";
-import { StartChatButton } from "@/components";
+import { Quiz, StartChatButton } from "@/components";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import { FaChevronDown } from "react-icons/fa";
+import { IoMdArrowRoundBack } from "react-icons/io";
 
 export const MyLearning: React.FC = () => {
   const [courseContent, setCourseContent] =
@@ -17,6 +19,7 @@ export const MyLearning: React.FC = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selectedLecture, setSelectedLecture] = useState<Lecture>();
   const [loading, setLoading] = useState(true);
+  const [isQuizOpen, setIsQuizOpen] = useState(false);
   const { courseId } = useParams();
 
   const tabs = ["Overview", "Q&A", "Notes"];
@@ -40,23 +43,42 @@ export const MyLearning: React.FC = () => {
 
     fetchCourse();
   }, []);
-  console.log("state",courseContent)
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);
   };
 
   const videoEnded = async () => {
     if (selectedLecture) {
-      console.log("Video Ended. Lecture ID:", selectedLecture.id);
       try {
         const response = await updateLectureStatus(selectedLecture.id);
-        console.log("Lecture Status Updated:", response);
+        // Update the courseContent.userProgress
+        setCourseContent((prev) => {
+          if (!prev) return prev;
+          return {
+            ...prev,
+            userProgress: response.data.userProgress,
+          };
+        });
       } catch (error) {
         console.error("Error updating lecture status:", error);
       }
     } else {
       console.error("No selected lecture found.");
     }
+  };
+
+  const handleQuizOpen = () => {
+    if (!courseContent?.userProgress) {
+      alert("You need to watch the course to take the quiz");
+      return;
+    }
+
+    // if (courseContent?.userProgress < 80) {
+    //   alert("You need to watch 80% of the course to take the quiz");
+    //   return;
+    // }
+    alert("Hurray");
+    setIsQuizOpen(true);
   };
 
   if (loading)
@@ -79,39 +101,73 @@ export const MyLearning: React.FC = () => {
       </div>
     );
   }
+
   return (
     <div className="flex flex-col min-h-screen bg-white">
       {/* Main Content */}
+      <div
+        onClick={toggleSidebar}
+        className="border bg-gray-100 h-10 mt-20 w-full flex items-center justify-center"
+      >
+        <FaChevronDown />
+      </div>
       <div className="flex relative">
         {/* Video Player */}
-        <div
-          className={`${
-            isCollapsed ? "w-full" : "w-full md:w-3/4"
-          } bg-black  transition-all duration-300`}
-        >
-          <div className="relative h-full flex items-center justify-center">
-            <video
-              className="w-full"
-              src={
-                selectedLecture?.video_path ||
-                courseContent?.course.intro_video ||
-                ""
-              }
-              poster={courseContent?.course.banner_image || ""}
-              controls
-              onEnded={videoEnded}
-            />
+        {isQuizOpen ? (
+          <div
+            className={`${
+              isCollapsed ? "w-full " : "w-full  md:w-3/4"
+            }  transition-all duration-300`}
+          >
+            <div className="relative  h-[80vh] overflow-y-auto  ">
+              <div
+                onClick={() => setIsQuizOpen(false)}
+                className="z-50 absolute top-4 left-4 cursor-pointer p-2 rounded-full hover:bg-gray-200 transition-all duration-300"
+              >
+                <IoMdArrowRoundBack />
+              </div>
+              <Quiz />
+            </div>
           </div>
-        </div>
+        ) : (
+          <div
+            className={`${
+              isCollapsed ? "w-full" : "w-full md:w-3/4"
+            } bg-black  transition-all duration-300`}
+          >
+            <div className="relative h-full flex items-center justify-center">
+              <video
+                className="w-full"
+                src={
+                  selectedLecture?.video_path ||
+                  courseContent?.course.intro_video ||
+                  ""
+                }
+                poster={courseContent?.course.banner_image || ""}
+                controls
+                onEnded={videoEnded}
+              />
+            </div>
+          </div>
+        )}
 
         {/* Course Content Sidebar */}
         <div
           className={`${
             isCollapsed
               ? "hidden"
-              : "absolute md:relative inset-0 z-10 md:w-1/4 bg-white md:bg-gray-50"
+              : "fixed md:relative inset-0 z-10 md:w-1/4 bg-white md:bg-gray-50"
           } overflow-y-auto border-l transition-all duration-300`}
         >
+          <div className="mt-10 px-10">
+            <p className="text-sm">Progress: {courseContent.userProgress}%</p>
+            <div className="w-full h-2 bg-gray-300 rounded-full">
+              <div
+                className="h-2 bg-brand-primary rounded-full "
+                style={{ width: `${courseContent.userProgress}%` }}
+              ></div>
+            </div>
+          </div>
           <div className="flex justify-between items-center p-4 border-b">
             <h2 className="font-bold text-lg">Course content</h2>
             <button
@@ -154,7 +210,7 @@ export const MyLearning: React.FC = () => {
       </div>
 
       {/* Navigation Tabs & Description */}
-      <div className="border-t">
+      <div className="border-t  overflow-auto">
         {/* Tabs */}
         <div className="flex overflow-x-auto border-b">
           {tabs.map((tab) => (
@@ -170,6 +226,14 @@ export const MyLearning: React.FC = () => {
               {tab}
             </button>
           ))}
+          <button
+            disabled={isQuizOpen}
+            onClick={handleQuizOpen}
+            className="px-4 py-3 text-sm font-medium whitespace-nowrap cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-gray-500 "
+          >
+            Take AI quiz
+          </button>
+
           {user.userInfo.role === "student" && (
             <div
               className={`px-4 py-3 text-sm font-medium whitespace-nowrap cursor-pointer`}
