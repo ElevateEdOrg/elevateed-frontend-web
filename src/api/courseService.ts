@@ -115,7 +115,7 @@ export interface CourseDetails {
 
 export interface Lecture {
   course_id: string;
-  id: string;
+  id?: string;
   title: string;
   description: string;
   video_path: string | null;
@@ -165,6 +165,16 @@ export interface UpdateLectureStatusResponse {
     success: boolean;
     message: string;
     progress: number;
+  };
+}
+
+export interface UpdateLectureResponse {
+  status: number;
+  data: {
+    message: string;
+    data: Lecture & {
+      course_id: string;
+    };
   };
 }
 
@@ -359,6 +369,51 @@ export const giveReviewApi = async (
       course_id,
       rating,
     });
+    return response;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+export const updateLecture = async (
+  lecture: Lecture
+): Promise<UpdateLectureResponse> => {
+  try {
+    const response = api.put(
+      `/api/courses/lectures/update/${lecture.id}`,
+      lecture
+    );
+    return response;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+export const deleteLecture = async (
+  lectureId: string
+): Promise<{
+  status: number;
+  data: {
+    message: string;
+  };
+}> => {
+  try {
+    const response = api.delete(`/api/courses/lectures/delete/${lectureId}`);
+    return response;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+export const deleteCourse = async (
+  courseId: string
+): Promise<{
+  status: number;
+  data: {
+    message: string;
+  };
+}> => {
+  try {
+    const response = api.delete(`/api/courses/delete/${courseId}`);
     return response;
   } catch (error) {
     return handleApiError(error);

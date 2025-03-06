@@ -48,7 +48,7 @@ export const MyLearning: React.FC = () => {
   };
 
   const videoEnded = async () => {
-    if (selectedLecture) {
+    if (selectedLecture && selectedLecture.id) {
       try {
         const response = await updateLectureStatus(selectedLecture.id);
         // Update the courseContent.userProgress

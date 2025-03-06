@@ -38,7 +38,6 @@ export function CreateCourse() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("course", course);
     try {
       const response = await createCourse(course);
       if (response.status === 201) {

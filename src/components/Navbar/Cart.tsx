@@ -24,10 +24,8 @@ export const Cart = () => {
   const handlePayment = async () => {
     setLoading(true);
     const courseIdArray = cart.courses.map((course) => course.id);
-    console.log("Clicked:", courseIdArray);
     try {
       const response = await makePayment(courseIdArray);
-      console.log(response);
       // Redirect to response.data.data
       window.location.href = response.data.data;
     } catch (error) {
