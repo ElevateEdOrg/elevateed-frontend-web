@@ -30,7 +30,6 @@ export const Quiz = () => {
 
   const handleSubmit = () => {
     let calculatedScore = 0;
-    console.log("Selected Answers", selectedAnswers);
     quiz.forEach((q, index) => {
       if (selectedAnswers[index] === q.answer) {
         calculatedScore++;

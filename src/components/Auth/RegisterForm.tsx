@@ -3,8 +3,6 @@ import { PasswordInput } from "./PasswordInput";
 import { AuthStates } from "@/types";
 import { AuthUserResponse, registerUser } from "@/api/authService";
 import { AxiosError } from "axios";
-import { useDispatch } from "react-redux";
-import { login } from "@/redux/slices/userSlice";
 import { toast } from "react-toastify";
 
 interface RegisterFormProps {
@@ -32,8 +30,6 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const dispatch = useDispatch();
-
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -45,6 +41,18 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
     setLoading(true);
     setError(null);
 
+    // Password validation regex: At least 1 uppercase, 1 special char, 1 number, min 6 chars
+    const passwordRegex =
+      /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+
+    if (!passwordRegex.test(formData.password)) {
+      setError(
+        "Password must have at least 1 uppercase letter, 1 special character, 1 number, and be at least 6 characters long."
+      );
+      setLoading(false);
+      return;
+    }
+
     try {
       const res: AuthUserResponse = await registerUser(
         formData.full_name,
@@ -52,13 +60,14 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
         formData.role,
         formData.password
       );
+
       if (res.status !== 201) {
         throw new Error(res.data.message);
       }
-      dispatch(login(res.data.user));
+
       if (res.data.status === "success") {
         toast.success("Registration Successful");
-        setAuthType(null);
+        setAuthType("login");
       }
     } catch (error) {
       const errorMessage =
