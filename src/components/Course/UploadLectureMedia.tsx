@@ -3,7 +3,7 @@ import axios from "axios";
 import { Lecture } from "@/api/courseService";
 
 interface UploadLectureMediaProps {
-  setLecture: Dispatch<SetStateAction<Partial<Lecture>>>;
+  setLecture: Dispatch<SetStateAction<Lecture>>;
 }
 
 export const UploadLectureMedia: React.FC<UploadLectureMediaProps> = ({
@@ -45,7 +45,6 @@ export const UploadLectureMedia: React.FC<UploadLectureMediaProps> = ({
           },
         }
       );
-      console.log(response.data);
       setLecture((prev) => ({
         ...prev,
         video_path: response.data.data.video_path,

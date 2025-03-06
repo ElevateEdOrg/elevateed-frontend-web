@@ -4,12 +4,14 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { UploadBannerAndIntro } from "@/components";
 import {
+  deleteCourse,
   fetchAllCategories,
   fetchUserCourses,
   updateCourse,
 } from "@/api/courseService";
 import { Course } from "@/types";
 import { toast } from "react-toastify";
+import { AxiosError } from "axios";
 
 export function UpdateCourse() {
   const [course, setCourse] = useState<Partial<Course>>({
@@ -76,15 +78,30 @@ export function UpdateCourse() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      console.log("selectedCourseId", selectedCourseId);
-      console.log("course", course);
       const response = await updateCourse(selectedCourseId, course);
-      console.log("response", response);
       if (response.status === 200) {
         toast.success("Course updated successfully");
       }
     } catch (error) {
       console.log("Error updating course", error);
+    }
+  };
+
+  const handleDeleteCourse = async () => {
+    try {
+      const response = await deleteCourse(selectedCourseId);
+      if (response.status === 200) {
+        toast.success("Course deleted successfully");
+      }
+    } catch (error) {
+      if (error instanceof AxiosError && error.response) {
+        if (error.response.status === 403) {
+          toast.error("Course cannot be deleted as it has enrollments");
+        }
+      } else {
+        console.error("Error deleting course:", error);
+        toast.error("An unexpected error occurred");
+      }
     }
   };
 
@@ -192,10 +209,21 @@ export function UpdateCourse() {
 
             {/* Banner and Intro Video Upload */}
             <UploadBannerAndIntro setCourse={setCourse} />
-
-            <Button type="submit" className="w-full mt-4">
-              Update Course
-            </Button>
+            <div>
+              <Button
+                type="submit"
+                className="w-full mt-4 cursor-pointer text-xl bg-brand-primary text-white"
+              >
+                Update Course
+              </Button>
+              <Button
+                onClick={handleDeleteCourse}
+                type="submit"
+                className="w-full mt-4 cursor-pointer text-xl bg-red-400 text-white"
+              >
+                Delete Course
+              </Button>
+            </div>
           </div>
         </form>
       </article>

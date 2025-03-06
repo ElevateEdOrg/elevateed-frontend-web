@@ -11,12 +11,16 @@ import { Course } from "@/types";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { Loader } from "../Loader";
+import { useNavigate } from "react-router";
 export const RecommendedCourses = () => {
   const [loading, setLoading] = useState(false);
   const [recommendedCourses, setRecommendedCourses] = useState<Course[] | null>(
     null
   );
   const { user } = useSelector((state: RootState) => state);
+
+  const navigate = useNavigate();
+
   useEffect(() => {
     const fetchAICourses = async () => {
       setLoading(true);
@@ -71,7 +75,10 @@ export const RecommendedCourses = () => {
 
       <div className="flex flex-col lg:flex-row items-center w-full gap-10 py-4">
         {/* First big course card */}
-        <article className="lg:w-1/2 w-80 flex-shrink-0">
+        <article
+          onClick={() => navigate(`/courses/${recommendedCourses[0].id}`)}
+          className="lg:w-1/2 w-80 flex-shrink-0 cursor-pointer"
+        >
           {/* Image */}
           <div className="w-full aspect-video rounded-4xl overflow-hidden">
             <img

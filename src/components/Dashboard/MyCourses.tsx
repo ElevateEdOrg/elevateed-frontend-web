@@ -36,7 +36,6 @@ export const MyCourses = () => {
     fetchCourses();
   }, []);
 
-  console.log("FetchedCourses:", fetchedCourses);
   return (
     <article className="flex grow w-full flex-wrap gap-4 justify-around mt-10">
       {loading && (

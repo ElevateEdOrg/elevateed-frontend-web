@@ -21,3 +21,4 @@ export * from "./ChatWidget/StartNewChat";
 export * from "./Course/Quiz";
 export * from "./Loader";
 export * from "./Course/GiveReview";
+export * from "./Course/UpdateLecture";
