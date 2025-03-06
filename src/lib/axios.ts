@@ -1,7 +1,7 @@
 import axios, { AxiosError } from "axios";
 
  
-export const API_BASE_URL = "http://192.168.10.49"; // Your backend URL
+export const API_BASE_URL = "http://54.172.93.123"; // Your backend URL
  
 
 export const api = axios.create({
