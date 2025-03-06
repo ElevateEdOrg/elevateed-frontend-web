@@ -19,7 +19,7 @@ interface UserMessagesProps {
 interface ReceivedMessage {
   chat_id?: string;
   message: string;
-  sender_id: string;
+  senderId: string;
   sent_at: string;
 }
 
@@ -38,6 +38,35 @@ export const UserMessages: React.FC<UserMessagesProps> = ({ socket }) => {
       messagesEndRef.current.scrollTop = messagesEndRef.current.scrollHeight;
     }
   }, [messages]);
+
+  const handleReceiveMessage = (data: ReceivedMessage) => {
+    if (data.senderId !== openChat?.receiver_id) {
+      return;
+    }
+
+    // Dispatch a single message instead of an entire array
+    dispatch(
+      setMessages({
+        sender_id: data.senderId,
+        message: data.message,
+        sent_at: data.sent_at,
+      })
+    );
+
+    dispatch(
+      setChats(
+        chats.map((chat) =>
+          chat.chat_id === data.chat_id
+            ? {
+                ...chat,
+                last_message: data.message,
+                last_sent_at: data.sent_at,
+              }
+            : chat
+        )
+      )
+    );
+  };
 
   useEffect(() => {
     if (textAreaRef.current) {
@@ -78,39 +107,12 @@ export const UserMessages: React.FC<UserMessagesProps> = ({ socket }) => {
       dispatch(setOpenChat({ ...openChat, isNewChat: false }));
     }
 
-    const handleReceiveMessage = (data: ReceivedMessage) => {
-      console.log("Old messages", messages);
-      dispatch(
-        setMessages([
-          ...messages,
-          {
-            sender_id: data.sender_id,
-            message: data.message,
-            sent_at: data.sent_at,
-          },
-        ])
-      );
-      dispatch(
-        setChats(
-          chats.map((chat) =>
-            chat.chat_id === data.chat_id
-              ? {
-                  ...chat,
-                  last_message: data.message,
-                  last_sent_at: data.sent_at,
-                }
-              : chat
-          )
-        )
-      );
-    };
-
     socket.on("receive_message", handleReceiveMessage);
 
     return () => {
       socket.off("receive_message", handleReceiveMessage);
     };
-  }, [openChat, messages]);
+  }, [openChat]); // Removed `messages` from dependencies
 
   const sendMessage = () => {
     if (openChat === null || !userInfo.id) return;

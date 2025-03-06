@@ -49,9 +49,19 @@ const chatSlice = createSlice({
     setChats: (state, action: PayloadAction<ChatState["chats"]>) => {
       state.chats = action.payload;
     },
-    setMessages: (state, action: PayloadAction<ChatState["messages"]>) => {
-      state.messages = action.payload;
+    setMessages: (
+      state,
+      action: PayloadAction<ChatState["messages"] | ChatState["messages"][0]>
+    ) => {
+      if (Array.isArray(action.payload)) {
+        // If payload is an array, replace messages (used for fetching history)
+        state.messages = action.payload;
+      } else {
+        // If payload is a single message, append it to the existing messages
+        state.messages.push(action.payload);
+      }
     },
+
     setIsWidgetOpen: (state, action: PayloadAction<boolean>) => {
       state.isWidgetOpen = action.payload;
     },
