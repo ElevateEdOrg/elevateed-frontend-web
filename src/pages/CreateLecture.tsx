@@ -8,7 +8,7 @@ import { Course } from "@/types";
 import { toast } from "react-toastify";
 
 export function CreateLecture() {
-  const [lecture, setLecture] = useState<Partial<Lecture>>({
+  const [lecture, setLecture] = useState<Lecture>({
     course_id: "",
     title: "",
     description: "",
@@ -31,11 +31,9 @@ export function CreateLecture() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("lecture", lecture);
     try {
       const response = await createLecture(lecture);
       if (response.status === 201) {
-        console.log("Lecture created successfully", response.data);
         toast.success("Lecture created successfully");
         setLecture({
           course_id: "",

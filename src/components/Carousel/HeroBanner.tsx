@@ -64,7 +64,7 @@ export function HeroBanner() {
             <CarouselItem key={course.id}>
               <div className="flex flex-col-reverse sm:flex-row aspect-auto h-[40vh] items-center rounded-4xl shadow-lg justify-center overflow-hidden">
                 <div className="flex grow bg-brand-secondary w-full sm:w-1/2 lg:w-auto sm:h-full px-4 sm:px-10 xl:px-20 py-2 sm:py-10 flex-col">
-                  <h2 className="text-white sm:text-2xl lg:text-3xl xl:text-5xl font-extrabold tracking-wider md:w-2/3">
+                  <h2 className="text-white sm:text-xl lg:text-2xl xl:text-4xl font-extrabold tracking-wider">
                     {course.title}
                   </h2>
                   <p className="text-white text-xs lg:text-base xl:text-3xl sm:mt-4 xl:mt-10 line-clamp-1">

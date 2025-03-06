@@ -43,7 +43,6 @@ export const UploadBannerAndIntro: React.FC<UploadBannerAndIntroVideoProps> = ({
           },
         }
       );
-      console.log(response.data);
       setCourse((prev) => ({
         ...prev,
         banner_image: response.data.data.banner_image,

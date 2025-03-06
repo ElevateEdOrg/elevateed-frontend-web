@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { MyCourses, UpdateCourse, UpdateProfileForm } from "@/components";
+import {
+  MyCourses,
+  UpdateCourse,
+  UpdateLecture,
+  UpdateProfileForm,
+} from "@/components";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { CreateCourse } from "./CreateCourse";
@@ -65,6 +70,14 @@ export function Profile() {
             >
               Update Course
             </button>
+            <button
+              onClick={() => setSelectedTab(6)}
+              className={`cursor-pointer transition-all duration-100 px-4 py-2 ${
+                selectedTab === 6 ? "border-b" : ""
+              }`}
+            >
+              Update Lecture
+            </button>
           </>
         )}
       </article>
@@ -79,6 +92,9 @@ export function Profile() {
       )}
       {user.userInfo.role === "instructor" && selectedTab === 5 && (
         <UpdateCourse />
+      )}
+      {user.userInfo.role === "instructor" && selectedTab === 6 && (
+        <UpdateLecture />
       )}
     </section>
   );
