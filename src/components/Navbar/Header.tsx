@@ -40,9 +40,9 @@ export const Header: React.FC<HeaderProps> = ({ setAuthType }) => {
       </Link>
 
       {/* Search */}
-      <div className="flex items-center py-5 grow">
+      <div className="flex items-center rounded-full grow border">
         <input
-          className="border rounded-l-full border-r-0 px-2 md:px-6 py-2 w-full h-full focus-within:outline-none text-xs"
+          className=" rounded-l-full  px-2 md:px-6 py-2 w-full h-full focus-within:outline-none text-xs"
           type="text"
           placeholder="Search for courses..."
           value={searchQuery}
@@ -50,7 +50,7 @@ export const Header: React.FC<HeaderProps> = ({ setAuthType }) => {
           onKeyPress={handleKeyPress}
         />
         <button
-          className="border border-l-0 px-2 md:px-6 h-full py-2 rounded-r-full cursor-pointer"
+          className=" px-2 md:px-6 h-full py-2 rounded-r-full cursor-pointer"
           onClick={handleSearch}
         >
           <CiSearch />
