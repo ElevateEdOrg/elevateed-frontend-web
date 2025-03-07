@@ -29,7 +29,10 @@ export const CustomAvatar: React.FC<{ avatar: string }> = ({ avatar }) => {
             Profile
           </Link>
           <button
-            onClick={() => dispatch(logout())}
+            onClick={() => {
+              dispatch(logout());
+              localStorage.removeItem("access_token");
+            }}
             className="border-t border-black py-2 cursor-pointer hover:text-red-500"
           >
             Logout

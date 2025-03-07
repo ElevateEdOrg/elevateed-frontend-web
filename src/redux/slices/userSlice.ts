@@ -42,6 +42,7 @@ const userSlice = createSlice({
         avatar: "",
       };
       state.isLoggedIn = false;
+      // Remove auth_token from localstorage
     },
     setAuthState: (state, action) => {
       state.authState = action.payload;
