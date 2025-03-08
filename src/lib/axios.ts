@@ -1,6 +1,6 @@
 import axios, { AxiosError } from "axios";
 
-export const API_BASE_URL = "http://3.94.26.43/"; // Your backend URL
+export const API_BASE_URL = "http://3.94.26.43"; // Your backend URL
 
 export const api = axios.create({
   baseURL: API_BASE_URL,

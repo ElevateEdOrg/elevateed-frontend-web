@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import axios from "axios";
 import { Lecture } from "@/api/courseService";
-
+import {API_BASE_URL } from "../../lib/axios"
 interface UploadLectureMediaProps {
   setLecture: Dispatch<SetStateAction<Lecture>>;
 }
@@ -36,7 +36,7 @@ export const UploadLectureMedia: React.FC<UploadLectureMediaProps> = ({
     try {
       setUploading(true);
       const response = await axios.post(
-        "http://192.168.10.49/api/courses/lectures/upload",
+        `${API_BASE_URL}/api/courses/lectures/upload`,
         formData,
         {
           headers: {

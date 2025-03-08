@@ -351,9 +351,9 @@ export const fetchRecommendedCourses =
     }
   };
 
-export const fetchAIQuiz = async (): Promise<FetchQuizResponse> => {
+export const fetchAIQuiz = async (courseContent:CourseContent): Promise<FetchQuizResponse> => {
   try {
-    const response = api.get("/api/courses/ai/getquiz");
+    const response = api.get(`/api/courses/ai/getquiz/${courseContent.course.id}`);
     return response;
   } catch (error) {
     return handleApiError(error);

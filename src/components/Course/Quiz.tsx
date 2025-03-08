@@ -1,7 +1,7 @@
 import { fetchAIQuiz } from "@/api/courseService";
 import { useEffect, useState } from "react";
-
-export const Quiz = () => {
+import { CourseContent } from "@/types";
+export const Quiz = ({ courseContent }: { courseContent: CourseContent }) => {
   const [selectedAnswers, setSelectedAnswers] = useState(Array(10).fill(null));
   const [score, setScore] = useState<number | null>(null);
   const [quiz, setQuiz] = useState<
@@ -11,7 +11,7 @@ export const Quiz = () => {
   useEffect(() => {
     const fetchQuiz = async () => {
       try {
-        const response = await fetchAIQuiz();
+        const response = await fetchAIQuiz(courseContent);
         if (response.status === 200) {
           setQuiz(response.data.data);
         }

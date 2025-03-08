@@ -125,7 +125,7 @@ export const MyLearning: React.FC = () => {
               >
                 <IoMdArrowRoundBack />
               </div>
-              <Quiz />
+              <Quiz courseContent={courseContent} />
             </div>
           </div>
         ) : (

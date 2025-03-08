@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
 import axios from "axios";
 import { Course } from "@/types";
-
+import {API_BASE_URL } from "../../lib/axios"
 interface UploadBannerAndIntroVideoProps {
   setCourse: Dispatch<SetStateAction<Partial<Course>>>;
 }
@@ -34,7 +34,7 @@ export const UploadBannerAndIntro: React.FC<UploadBannerAndIntroVideoProps> = ({
     try {
       setUploading(true);
       const response = await axios.post(
-        "http://192.168.10.49/api/courses/upload",
+        `${API_BASE_URL}/api/courses/upload`,
         formData,
         {
           headers: {
