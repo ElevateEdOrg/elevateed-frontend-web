@@ -1,9 +1,11 @@
 import { fetchAIQuiz } from "@/api/courseService";
 import { useEffect, useState } from "react";
 import { CourseContent } from "@/types";
+import { toast } from "react-toastify";
 export const Quiz = ({ courseContent }: { courseContent: CourseContent }) => {
-  const [selectedAnswers, setSelectedAnswers] = useState(Array(10).fill(null));
+  const [selectedAnswers, setSelectedAnswers] = useState(Array());
   const [score, setScore] = useState<number | null>(null);
+  const [quizfetched, setQuizfetched] = useState<Boolean>(false);
   const [quiz, setQuiz] = useState<
     { question: string; options: string[]; answer: string }[]
   >([]);
@@ -14,13 +16,17 @@ export const Quiz = ({ courseContent }: { courseContent: CourseContent }) => {
         const response = await fetchAIQuiz(courseContent);
         if (response.status === 200) {
           setQuiz(response.data.data);
+          setQuizfetched(true)
         }
-      } catch (error) {
+      } catch (error:any) {
         console.error("error fetching quiz", error);
       }
     };
     fetchQuiz();
   }, []);
+
+  console.log(selectedAnswers)
+  console.log(score)
 
   const handleOptionChange = (questionIndex: number, option: string) => {
     const newAnswers = [...selectedAnswers];
@@ -37,7 +43,13 @@ export const Quiz = ({ courseContent }: { courseContent: CourseContent }) => {
     });
     setScore(calculatedScore);
   };
-
+  if (quizfetched === false) {
+    return (
+      <div className="p-4 text-center text-red-600 text-2xl font-bold">
+        quiz not found for this course
+      </div>
+    );
+  }
   return (
     <div className="p-4 relative h-full">
       <h2 className="text-3xl text-center text-gray-800  font-bold mb-4">
@@ -73,10 +85,11 @@ export const Quiz = ({ courseContent }: { courseContent: CourseContent }) => {
           </div>
         ))}
       <button
-        disabled={score !== null || selectedAnswers.includes(null)}
+        disabled={score !== null || selectedAnswers.includes("")}
         onClick={handleSubmit}
-        className="bg-blue-500 text-white px-4 py-2 mt-4"
+        className={`px-4 py-2 mt-4 text-white ${score !== null || selectedAnswers.includes("") ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"}`}
       >
+
         Submit
       </button>
       {score !== null && (

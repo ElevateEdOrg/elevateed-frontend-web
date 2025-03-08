@@ -149,6 +149,7 @@ export interface FetchQuizResponse {
       options: string[];
       answer: string;
     }[];
+    message?:string
   };
 }
 
